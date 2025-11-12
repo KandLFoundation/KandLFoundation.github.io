@@ -8,10 +8,9 @@
 </head>
 <body>
 
-<!-- Particle canvas as background -->
 <canvas id="particle-canvas"></canvas>
 
-<header>
+<header id="header">
   <img src="images/logo.png" alt="KL Digital Logo">
   <h1>KL Digital | K&L Foundation</h1>
   <nav>
@@ -24,35 +23,34 @@
 </header>
 
 <div class="hero">
-  <img src="images/logo.png" alt="KL Digital Logo" style="height:100px; margin-bottom:1rem;">
+  <img src="images/logo.png" alt="KL Digital Logo">
   <h1>Innovate. Educate. Empower.</h1>
 </div>
 
 <section id="mission">
   <h2>Our Mission</h2>
-  <p>KL Digital is the technology and innovation branch of K&L Foundation. We focus on teaching digital skills, experimenting with AI, creating web solutions, and empowering the community through technology.</p>
+  <p>KL Digital is the tech branch of K&L Foundation. We teach AI, build websites, and empower the community through digital innovation.</p>
   <a href="mailto:kandlfoundation.sa@gmail.com" class="btn">Join Our Mission</a>
 </section>
 
 <section id="projects">
   <h2>Projects</h2>
-  <p>We design websites, conduct workshops, and develop tools that help the community. Our goal is to merge technology with social impact.</p>
-
+  <p>From web development to AI workshops and tech support, our projects merge technology with social impact.</p>
   <div class="project-container">
     <div class="project-card">
-      <img src="images/Web Development.svg" alt="Web Development Icon">
+      <img src="images/Web Development.svg" class="floating">
       <h3>Web Development</h3>
-      <p>Creating websites to improve accessibility and visibility for social causes.</p>
+      <p>Building websites for social causes.</p>
     </div>
     <div class="project-card">
-      <img src="images/AI Workshops.svg" alt="AI Workshops Icon">
+      <img src="images/AI Workshops.svg" class="floating">
       <h3>AI Workshops</h3>
-      <p>Teaching community members about AI tools, automation, and problem solving.</p>
+      <p>Teaching AI tools and problem-solving skills.</p>
     </div>
     <div class="project-card">
-      <img src="images/Tech Support.svg" alt="Tech Support Icon">
+      <img src="images/Tech Support.svg" class="floating">
       <h3>Tech Support</h3>
-      <p>Helping individuals optimize devices and solve tech issues with hands-on guidance.</p>
+      <p>Optimizing devices and solving tech issues.</p>
     </div>
   </div>
 </section>
@@ -67,92 +65,7 @@
   <p>© 2025 K&L Foundation | KL Digital</p>
 </footer>
 
-<script>
-// Particle system
-const canvas = document.getElementById('particle-canvas');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particles = [];
-const numParticles = 120;
-
-for(let i=0;i<numParticles;i++){
-  particles.push({
-    x: Math.random()*canvas.width,
-    y: Math.random()*canvas.height,
-    r: Math.random()*3+1,
-    dx: (Math.random()-0.5)*1.5,
-    dy: (Math.random()-0.5)*1.5
-  });
-}
-
-function connectParticles(){
-  for(let i=0;i<numParticles;i++){
-    for(let j=i;j<numParticles;j++){
-      const dx = particles[i].x - particles[j].x;
-      const dy = particles[i].y - particles[j].y;
-      const dist = Math.sqrt(dx*dx + dy*dy);
-      if(dist<120){
-        ctx.strokeStyle = `rgba(26,115,232,${1-dist/120})`; // blue line
-        ctx.lineWidth=1;
-        ctx.beginPath();
-        ctx.moveTo(particles[i].x,particles[i].y);
-        ctx.lineTo(particles[j].x,particles[j].y);
-        ctx.stroke();
-      }
-    }
-  }
-}
-
-function animateParticles(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  for(let p of particles){
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle='rgba(26,115,232,0.8)'; // bright blue particles
-    ctx.shadowBlur = 8;
-    ctx.shadowColor = 'rgba(26,115,232,0.6)';
-    ctx.fill();
-    p.x += p.dx;
-    p.y += p.dy;
-    if(p.x<0 || p.x>canvas.width) p.dx*=-1;
-    if(p.y<0 || p.y>canvas.height) p.dy*=-1;
-  }
-  connectParticles();
-  requestAnimationFrame(animateParticles);
-}
-
-// Mouse interaction
-document.addEventListener('mousemove', e=>{
-  particles.forEach(p=>{
-    let dx = p.x - e.clientX;
-    let dy = p.y - e.clientY;
-    let dist = Math.sqrt(dx*dx + dy*dy);
-    if(dist<100){
-      p.x += dx*0.01;
-      p.y += dy*0.01;
-    }
-  });
-});
-
-window.addEventListener('resize', ()=>{
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
-
-// Scroll fade in sections
-const sections = document.querySelectorAll('section');
-const revealSection = () => {
-  sections.forEach(section => {
-    if(section.getBoundingClientRect().top < window.innerHeight / 1.1) section.classList.add('visible');
-  });
-};
-window.addEventListener('scroll', revealSection);
-window.addEventListener('load', revealSection);
-
-animateParticles();
-</script>
-
+<script src="particles.js"></script>
+<script src="scroll.js"></script>
 </body>
 </html>
