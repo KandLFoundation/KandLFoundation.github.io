@@ -3,69 +3,167 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KL Digital | K&L Foundation</title>
+<title>KL Digital | Tech & AI Innovation</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<canvas id="particle-canvas"></canvas>
-
-<header id="header">
-  <img src="images/logo.png" alt="KL Digital Logo">
-  <h1>KL Digital | K&L Foundation</h1>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="#mission">Mission</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
-    <a href="mailto:kandlfoundation.sa@gmail.com">Donate</a>
-  </nav>
+<header>
+    <img src="images/logo.png" alt="KL Digital Logo">
+    <h1>KL Digital</h1>
+    <nav>
+        <a href="#hero">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="donate.html">Donate</a>
+    </nav>
 </header>
 
-<div class="hero">
-  <img src="images/logo.png" alt="KL Digital Logo">
-  <h1>Innovate. Educate. Empower.</h1>
+<div class="hero" id="hero">
+    <img src="images/logo.png" alt="KL Digital Logo">
+    <h1>Empowering Innovation Through AI & Technology</h1>
+    <a class="btn" href="#projects">Explore Projects</a>
 </div>
 
-<section id="mission">
-  <h2>Our Mission</h2>
-  <p>KL Digital is the tech branch of K&L Foundation. We teach AI, build websites, and empower the community through digital innovation.</p>
-  <a href="mailto:kandlfoundation.sa@gmail.com" class="btn">Join Our Mission</a>
-</section>
-
 <section id="projects">
-  <h2>Projects</h2>
-  <p>From web development to AI workshops and tech support, our projects merge technology with social impact.</p>
-  <div class="project-container">
-    <div class="project-card">
-      <img src="images/Web Development.svg" class="floating">
-      <h3>Web Development</h3>
-      <p>Building websites for social causes.</p>
+    <h2>Our Projects</h2>
+    <div class="project-container">
+        <div class="project-card">
+            <img src="images/Web Development.svg" alt="Web Development Icon">
+            <h3>Web Development</h3>
+            <p>Creating responsive, modern websites that solve real problems.</p>
+        </div>
+        <div class="project-card">
+            <img src="images/AI Workshops.svg" alt="AI Workshops Icon">
+            <h3>AI Workshops</h3>
+            <p>Hands-on sessions teaching AI concepts and practical implementation.</p>
+        </div>
+        <div class="project-card">
+            <img src="images/Tech Support.svg" alt="Tech Support Icon">
+            <h3>Tech Support</h3>
+            <p>Helping people with software, hardware, and digital optimization issues.</p>
+        </div>
     </div>
-    <div class="project-card">
-      <img src="images/AI Workshops.svg" class="floating">
-      <h3>AI Workshops</h3>
-      <p>Teaching AI tools and problem-solving skills.</p>
-    </div>
-    <div class="project-card">
-      <img src="images/Tech Support.svg" class="floating">
-      <h3>Tech Support</h3>
-      <p>Optimizing devices and solving tech issues.</p>
-    </div>
-  </div>
 </section>
 
-<section id="contact">
-  <h2>Contact Us</h2>
-  <p>Email: <a href="mailto:kandlfoundation.sa@gmail.com">kandlfoundation.sa@gmail.com</a></p>
-  <p>Location: Polokwane, Limpopo, South Africa</p>
+<section id="about">
+    <h2>About KL Digital</h2>
+    <p>KL Digital is driven by passion for technology, AI, and innovation. We create tools, teach skills, and solve digital problems. Our mission is to empower youth and communities using modern tech solutions.</p>
 </section>
 
 <footer>
-  <p>© 2025 K&L Foundation | KL Digital</p>
+    <p>© 2025 KL Digital | Powered by Passion & Innovation</p>
 </footer>
 
-<script src="particles.js"></script>
-<script src="scroll.js"></script>
+<canvas id="particle-canvas"></canvas>
+
+<script>
+// ===== KL Digital Particle System =====
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+let w = canvas.width = window.innerWidth;
+let h = canvas.height = window.innerHeight;
+
+window.addEventListener('resize', () => {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+});
+
+class Particle {
+    constructor(){
+        this.x = Math.random() * w;
+        this.y = Math.random() * h;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 1.5;
+        this.speedY = (Math.random() - 0.5) * 1.5;
+        this.color = 'rgba(26,115,232,0.7)';
+    }
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if(this.x < 0 || this.x > w) this.speedX *= -1;
+        if(this.y < 0 || this.y > h) this.speedY *= -1;
+    }
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+}
+
+const particlesArray = [];
+const particleCount = 120;
+for(let i=0;i<particleCount;i++) particlesArray.push(new Particle());
+
+const mouse = { x: null, y: null };
+window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
+window.addEventListener('click', e => { connectLines(e.x, e.y); });
+
+function connectLines(mx, my){
+    particlesArray.forEach(p => {
+        const dx = p.x - mx;
+        const dy = p.y - my;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < 150){
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(255,152,0,' + (1 - dist/150) + ')';
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(mx, my);
+            ctx.stroke();
+        }
+    });
+}
+
+function animate(){
+    ctx.clearRect(0,0,w,h);
+    particlesArray.forEach(p => { p.update(); p.draw(); });
+
+    for(let i=0;i<particlesArray.length;i++){
+        for(let j=i;j<particlesArray.length;j++){
+            const dx = particlesArray[i].x - particlesArray[j].x;
+            const dy = particlesArray[i].y - particlesArray[j].y;
+            const distance = Math.sqrt(dx*dx + dy*dy);
+            if(distance < 120){
+                ctx.beginPath();
+                ctx.strokeStyle = 'rgba(26,115,232,' + (1-distance/120) + ')';
+                ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                ctx.stroke();
+            }
+        }
+    }
+
+    requestAnimationFrame(animate);
+}
+animate();
+
+function hoverAttract(){
+    if(mouse.x && mouse.y){
+        particlesArray.forEach(p => {
+            const dx = mouse.x - p.x;
+            const dy = mouse.y - p.y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            if(dist < 100){
+                p.x -= dx*0.02;
+                p.y -= dy*0.02;
+            }
+        });
+    }
+    requestAnimationFrame(hoverAttract);
+}
+hoverAttract();
+
+// Section reveal
+const sections = document.querySelectorAll('section');
+const revealSection = () => {
+  sections.forEach(section => {
+    if(section.getBoundingClientRect().top < window.innerHeight / 1.1) section.classList.add('visible');
+  });
+};
+window.addEventListener('scroll', revealSection);
+window.addEventListener('load', revealSection);
+</script>
+
 </body>
 </html>
