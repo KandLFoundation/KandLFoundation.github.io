@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <canvas id="particle-canvas"></canvas>
 
 <header>
@@ -16,41 +17,39 @@
     <a href="#hero">Home</a>
     <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
+    <a href="https://kandlfoundation.com" target="_blank">K&L Foundation</a>
   </nav>
 </header>
 
 <section class="hero" id="hero">
-  <div class="hero-content">
-    <img src="images/logo.png" alt="KL Digital Logo">
-    <h1>Innovate. Educate. Empower.</h1>
-    <a href="#projects" class="btn">Our Projects</a>
-  </div>
+  <h1>Innovate • Educate • Empower</h1>
+  <a href="#projects" class="btn">Explore Projects</a>
 </section>
 
 <section id="projects">
   <h2>Our Projects</h2>
   <div class="project-container">
     <div class="project-card">
-      <img src="images/Web Development.svg" alt="Web Development">
-      <h3>Web Development</h3>
-      <p>Building interactive and responsive websites for all initiatives.</p>
-    </div>
-    <div class="project-card">
       <img src="images/AI Workshops.svg" alt="AI Workshops">
       <h3>AI Workshops</h3>
-      <p>Teaching AI, chatbots, and automation skills to youth in the community.</p>
+      <p>Training youth in artificial intelligence applications and projects.</p>
+    </div>
+    <div class="project-card">
+      <img src="images/Web Development.svg" alt="Web Development">
+      <h3>Web Development</h3>
+      <p>Creating functional, aesthetic websites for community projects.</p>
     </div>
     <div class="project-card">
       <img src="images/Tech Support.svg" alt="Tech Support">
       <h3>Tech Support</h3>
-      <p>Providing solutions to internal laptop issues, software upgrades, and troubleshooting.</p>
+      <p>Providing hands-on technical assistance and IT troubleshooting.</p>
     </div>
   </div>
 </section>
 
 <section id="contact">
   <h2>Contact Us</h2>
-  <p>Email: <a href="mailto:kandlfoundation.sa@gmail.com">kandlfoundation.sa@gmail.com</a></p>
+  <p>Email: <a href="mailto:kldigital@kandlfoundation.com">kldigital@kandlfoundation.com</a></p>
   <p>Location: Polokwane, Limpopo, South Africa</p>
 </section>
 
@@ -58,7 +57,17 @@
   <p>© 2025 K&L Foundation | KL Digital</p>
 </footer>
 
-<script src="particles.js"></script>
-<script src="main.js"></script>
+<script src="main.js" defer></script>
+<script>
+  // Scroll reveal sections
+  const sections = document.querySelectorAll('section');
+  window.addEventListener('scroll', () => {
+    sections.forEach(section => {
+      if(section.getBoundingClientRect().top < window.innerHeight - 100) {
+        section.classList.add('visible');
+      }
+    });
+  });
+</script>
 </body>
 </html>
