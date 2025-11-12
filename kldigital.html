@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KL Digital | K&L Foundation</title>
+<link rel="stylesheet" href="style.css"> 
+<style>
+body { font-family: Arial, sans-serif; background:#fafafa; color:#222; margin:0; overflow-x:hidden; }
+header { background:#1a73e8; color:white; padding:1rem 2rem; text-align:center; }
+section { max-width:900px; margin:auto; padding:4rem 1rem; text-align:center; }
+h2 { color:#1a73e8; border-bottom:2px solid #1a73e8; display:inline-block; margin-bottom:2rem; }
+.hero { position:relative; height:60vh; display:flex; justify-content:center; align-items:center; color:white; text-align:center; }
+.hero h1 { font-size:2.5rem; z-index:2; }
+canvas { position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; }
+a.btn { display:inline-block; background:#ff9800; color:white; padding:1rem 2rem; border-radius:5px; text-decoration:none; font-weight:bold; margin-top:2rem; transition:transform 0.3s; }
+a.btn:hover { transform:translateY(-5px); }
+footer { background:#1a73e8; color:white; text-align:center; padding:2rem 1rem; margin-top:3rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>KL Digital | K&L Foundation</h1>
+</header>
+
+<div class="hero">
+  <h1>Our Mission: Innovate, Educate, Empower</h1>
+  <canvas id="particle-canvas"></canvas>
+</div>
+
+<section>
+  <h2>What We Do</h2>
+  <p>KL Digital is the tech and innovation branch of K&L Foundation. We focus on teaching digital skills, AI experimentation, web design, and creating solutions that empower our community.</p>
+  <a href="mailto:kandlfoundation.sa@gmail.com" class="btn">Contact Us</a>
+</section>
+
+<footer>
+  <p>© 2025 K&L Foundation | KL Digital</p>
+</footer>
+
+<script src="particles.js"></script>
+<script>
+// Simple particles effect
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const particles = [];
+for(let i=0;i<100;i++){
+  particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*2+1, dx:(Math.random()-0.5)*0.5, dy:(Math.random()-0.5)*0.5});
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let p of particles){
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle="rgba(255,255,255,0.7)";
+    ctx.fill();
+    p.x += p.dx;
+    p.y += p.dy;
+    if(p.x<0||p.x>canvas.width) p.dx*=-1;
+    if(p.y<0||p.y>canvas.height) p.dy*=-1;
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>
