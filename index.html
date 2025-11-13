@@ -1,53 +1,442 @@
-import os
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-import openai
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>K&L Foundation | Helping Those in Need</title>
+<style>
+  #intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 1.5s ease;
+  }
 
-# Initialize Flask app
-app = Flask(__name__)
-CORS(app)  # Allow cross-origin requests from your website
+  #intro-screen img.intro-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 1rem;
+    animation: fadeIn 1.5s ease;
+  }
 
-# Load environment variables
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
-BOT_NAME = os.environ.get("BOT_NAME", "KL Lexus")
+  #intro-screen h2 {
+    font-size: 1.5rem;
+    color: #1a73e8;
+    animation: fadeIn 2s ease;
+  }
 
-if not OPENAI_API_KEY:
-    raise ValueError("OPENAI_API_KEY environment variable is not set!")
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-# Set API key for OpenAI client
-openai.api_key = OPENAI_API_KEY
+  .hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 
-@app.route("/chat", methods=["POST"])
-def chat():
-    data = request.get_json()
-    user_msg = data.get("message", "").strip()
+  :root {
+    --primary-color: #1a73e8;
+    --accent-color: #ff9800;
+    --secondary-color: #1abc9c;
+    --text-color: #222;
+    --bg-color: #fafafa;
+  }
 
-    if not user_msg:
-        return jsonify({"reply": f"{BOT_NAME}: Please type something first!"})
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: var(--bg-color);
+    color: var(--text-color);
+    scroll-behavior: smooth;
+  }
 
-    try:
-        # Use the new OpenAI 1.x API
-        response = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": f"You are {BOT_NAME}, a helpful assistant for K&L Foundation."},
-                {"role": "user", "content": user_msg}
-            ],
-            max_tokens=200,
-            temperature=0.7
-        )
+  header {
+    background: var(--primary-color);
+    color: white;
+    padding: 1rem 2rem;
+    text-align: center;
+  }
 
-        bot_reply = response.choices[0].message.content
+  nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
 
-    except Exception as e:
-        bot_reply = f"{BOT_NAME}: Sorry, I couldn’t process that. ({e})"
+  nav a:hover { color: #ffd700; }
 
-    return jsonify({"reply": bot_reply})
+  .hero {
+    background: url('https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    color: white;
+    text-align: center;
+    padding: 6rem 1rem;
+    position: relative;
+  }
 
-@app.route("/", methods=["GET"])
-def home():
-    return jsonify({"status": "KL Lexus server is running"}), 200
+  .hero h1 {
+    font-size: 2.5rem;
+    background: rgba(0,0,0,0.5);
+    display: inline-block;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+  }
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))  # Render sets PORT automatically
-    app.run(host="0.0.0.0", port=port)
+  .hero-btn {
+    display: inline-block;
+    background: var(--accent-color);
+    color: white;
+    font-weight: bold;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .hero-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+
+  section {
+    padding: 3rem 1.5rem;
+    max-width: 900px;
+    margin: auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: opacity, transform;
+  }
+
+  section.visible { opacity: 1; transform: translateY(0); }
+
+  h2 {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+
+  .work {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem 0;
+  }
+
+  .card, .stat-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s, opacity 0.8s, transform 0.8s;
+    will-change: transform, opacity;
+  }
+
+  .card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 0.8rem;
+  }
+
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+  }
+
+  .card h3 { margin: 0.5rem 0; color: var(--primary-color); }
+  .card p { font-size: 0.95rem; color: #555; }
+
+  footer {
+    background: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 3rem;
+  }
+
+  footer a { color: #ffd700; text-decoration: none; font-weight: bold; }
+
+  #backToTop {
+    position: fixed; bottom: 30px; right: 30px; display: none;
+    background: var(--primary-color); color:white; border:none;
+    padding:0.8rem 1rem; border-radius:50px;
+    cursor:pointer; font-weight:bold; z-index: 1000;
+    transition: background 0.3s;
+  }
+
+  #backToTop:hover { background: #155ab6; }
+
+  blockquote { font-style: italic; color: #555; margin-top: 1.5rem; }
+
+  /* KL Lexus Chat Widget */
+  #kllexus-chat {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 350px;
+    max-height: 500px;
+    background: white;
+    border: 2px solid #0055ff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    z-index: 9999;
+  }
+  #kllexus-messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+  }
+  #kllexus-input {
+    display: flex;
+    border-top: 1px solid #ccc;
+  }
+  #kllexus-input input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+  }
+  #kllexus-input button {
+    padding: 10px;
+    background: #0055ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  .kllexus-msg { margin-bottom: 10px; }
+  .kllexus-msg.bot { color: #0055ff; }
+  .kllexus-msg.user { text-align: right; color: #333; }
+</style>
+  <link rel="icon" type="image/png" href="/favicon.ico">
+</head>
+<body>
+<div id="intro-screen">
+  <img src="logo.png" alt="K&L Foundation Logo" class="intro-logo">
+  <h2>Welcome to K&L Foundation</h2>
+</div>
+
+<header>
+  <img src="logo.png" alt="K&L Foundation Logo" style="height:80px;">
+  <h1>K&L Foundation</h1>
+  <nav>
+      <a href="#about">About</a>
+      <a href="#work">Our Work</a>
+      <a href="#help">Get Involved</a>
+      <a href="#contact">Contact</a>
+      <a href="donate.html">Donate</a>
+      <a href="kldigital.html">KL Digital</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <h1>Together, We Bring Warmth and Hope</h1>
+  <a href="donate.html" class="hero-btn">Donate Now</a>
+</div>
+
+<section id="about">
+  <h2>About Us</h2>
+  <p>K&L Foundation is a community-driven initiative based in South Africa, dedicated to helping those in need. We donate clothes, pads, food, and blankets to the less fortunate, ensuring that no one is left behind. We believe kindness can change lives, one act at a time.</p>
+
+  <div style="display:flex; flex-wrap:wrap; gap:1rem; margin-top:2rem;">
+    <div class="stat-card" style="flex:1; min-width:200px; background:var(--primary-color); color:white;">
+      <h3 class="stat-number" data-target="25">0</h3>
+      <p>People helped this year</p>
+    </div>
+    <div class="stat-card" style="flex:1; min-width:200px; background:var(--accent-color); color:white;">
+      <h3 class="stat-number" data-target="15">0</h3>
+      <p>Clothes distributed</p>
+    </div>
+    <div class="stat-card" style="flex:1; min-width:200px; background:var(--secondary-color); color:white;">
+      <h3 class="stat-number" data-target="20">0</h3>
+      <p>Blankets donated</p>
+    </div>
+  </div>
+
+  <p style="margin-top:2rem;">Our mission is to create a compassionate community where everyone has access to basic needs. Our vision is a South Africa where no one sleeps hungry or cold, and young women have access to essential hygiene products.</p>
+
+  <blockquote>“The smallest act of kindness is worth more than the grandest intention.” – K&L Foundation</blockquote>
+  <blockquote>“Helping one person might not change the world, but it could change the world for one person.” – K&L Foundation</blockquote>
+</section>
+
+<section id="work">
+  <h2>Our Work</h2>
+  <div class="work">
+    <div class="card">
+      <img src="images/food.png" alt="Volunteers distributing food">
+      <h3>Food Drives</h3>
+      <p>Providing meals to communities facing hunger.</p>
+    </div>
+    <div class="card">
+      <img src="images/clothing.png" alt="Warm clothing distribution">
+      <h3>Clothing Donations</h3>
+      <p>Supplying warm clothes for children and adults.</p>
+    </div>
+    <div class="card">
+      <img src="images/sanitarypads.png" alt="Young women receiving sanitary pads">
+      <h3>Sanitary Pads</h3>
+      <p>Empowering young women through hygiene support.</p>
+    </div>
+    <div class="card">
+      <img src="images/Blankets.png" alt="Blankets being distributed">
+      <h3>Blanket Campaigns</h3>
+      <p>Bringing comfort during the cold winter months.</p>
+    </div>
+  </div>
+</section>
+
+<section id="help">
+  <h2>How You Can Help</h2>
+  <p>Your support keeps us going. Whether it’s a donation, volunteering, or spreading awareness — every action counts.</p>
+  <ul>
+    <li>Volunteer your time to help distribute goods.</li>
+    <li>Donate clothes, food, or funds to our cause.</li>
+    <li>Share our mission with your community.</li>
+  </ul>
+</section>
+
+<section id="contact">
+  <h2>Contact Us</h2>
+  <p>Email: <a href="mailto:kandlfoundation.sa@gmail.com">kandlfoundation.sa@gmail.com</a></p>
+  <p>Location: Polokwane, Limpopo, South Africa</p>
+</section>
+
+<footer>
+  <p>© 2025 K&L Foundation | Built with love and community spirit.</p>
+</footer>
+
+<div id="kllexus-button" style="position:fixed;bottom:20px;right:20px;z-index:9999;">
+  <button style="background:#0055ff;color:white;padding:10px 15px;border:none;border-radius:50px;cursor:pointer;">Chat with KL Lexus</button>
+</div>
+
+<div id="kllexus-chat" style="display:none;">
+  <div id="kllexus-messages"></div>
+  <div id="kllexus-input">
+    <input type="text" id="kllexus-text" placeholder="Ask KL Lexus..." />
+    <button id="kllexus-send">Send</button>
+  </div>
+</div>
+
+<button id="backToTop">↑ Top</button>
+
+<script defer>
+// Fade-in sections
+const sections = document.querySelectorAll('section');
+const revealSection = () => {
+  sections.forEach(section => {
+    if(section.getBoundingClientRect().top < window.innerHeight / 1.1) section.classList.add('visible');
+  });
+};
+window.addEventListener('scroll', revealSection);
+window.addEventListener('load', revealSection);
+
+// Animate stats with one-time flag
+const stats = document.querySelectorAll('.stat-number');
+const statCards = document.querySelectorAll('.stat-card');
+let statsAnimated = false;
+function animateStats() {
+  if(statsAnimated) return;
+  stats.forEach((stat, i) => {
+    const target = +stat.getAttribute('data-target');
+    let count = 0;
+    const increment = target / 100;
+    const update = () => {
+      count += increment;
+      stat.innerText = count < target ? Math.ceil(count) : target;
+      if(count < target) requestAnimationFrame(update);
+    };
+    update();
+    statCards[i].classList.add('visible');
+  });
+  statsAnimated = true;
+}
+
+window.addEventListener('scroll', () => {
+  const aboutSection = document.getElementById('about');
+  if(aboutSection.getBoundingClientRect().top < window.innerHeight / 1.2) animateStats();
+});
+
+// Back-to-top button
+const backToTop = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+});
+backToTop.addEventListener('click', () => {
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+// Intro screen
+window.addEventListener("load", () => {
+  const intro = document.getElementById("intro-screen");
+  setTimeout(() => {
+    intro.classList.add("hidden");
+    setTimeout(() => intro.remove(), 1500);
+  }, 5000);
+});
+
+// KL Lexus Chat
+const messagesEl = document.getElementById('kllexus-messages');
+const inputEl = document.getElementById('kllexus-text');
+const sendBtn = document.getElementById('kllexus-send');
+const BOT_URL = 'https://smartchatserver.onrender.com/chat';
+
+function addMessage(msg, sender) {
+  const div = document.createElement('div');
+  div.className = 'kllexus-msg ' + sender;
+  div.textContent = msg;
+  messagesEl.appendChild(div);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+async function sendMessage() {
+  const msg = inputEl.value.trim();
+  if(!msg) return;
+  addMessage(msg, 'user');
+  inputEl.value = '';
+  try {
+    const res = await fetch(BOT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: msg })
+    });
+    const data = await res.json();
+    addMessage(data.reply, 'bot');
+  } catch (e) {
+    addMessage("KL Lexus: Sorry, I couldn't connect to the server.", 'bot');
+  }
+}
+
+sendBtn.addEventListener('click', sendMessage);
+inputEl.addEventListener('keypress', (e) => {
+  if(e.key === 'Enter') sendMessage();
+});
+
+// Toggle chat
+const chatBtn = document.querySelector('#kllexus-button button');
+const chatBox = document.getElementById('kllexus-chat');
+chatBtn.addEventListener('click', () => {
+  chatBox.style.display = chatBox.style.display === 'none' ? 'flex' : 'none';
+});
+</script>
+
+</body>
+</html>
