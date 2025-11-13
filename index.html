@@ -200,7 +200,6 @@
       <a href="#contact">Contact</a>
       <a href="donate.html">Donate</a>
       <a href="kldigital.html">KL Digital</a>
-      <a href="/chatbot/index.html">Chat with us</a>
   </nav>
 </header>
 
@@ -275,10 +274,70 @@
   <p>Email: <a href="mailto:kandlfoundation.sa@gmail.com">kandlfoundation.sa@gmail.com</a></p>
   <p>Location: Polokwane, Limpopo, South Africa</p>
 </section>
-
+  
 <footer>
   <p>© 2025 K&L Foundation | Built with love and community spirit.</p>
 </footer>
+
+  <!-- KL Lexus Chat Widget -->
+<style>
+#kllexus-chat {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 350px;
+  max-height: 500px;
+  background: white;
+  border: 2px solid #0055ff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  z-index: 9999;
+}
+#kllexus-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+#kllexus-input {
+  display: flex;
+  border-top: 1px solid #ccc;
+}
+#kllexus-input input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  outline: none;
+}
+#kllexus-input button {
+  padding: 10px;
+  background: #0055ff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.kllexus-msg {
+  margin-bottom: 10px;
+}
+.kllexus-msg.bot {
+  color: #0055ff;
+}
+.kllexus-msg.user {
+  text-align: right;
+  color: #333;
+}
+</style>
+
+<div id="kllexus-chat">
+  <div id="kllexus-messages"></div>
+  <div id="kllexus-input">
+    <input type="text" id="kllexus-text" placeholder="Ask KL Lexus..." />
+    <button id="kllexus-send">Send</button>
+  </div>
+</div>
 
 <button id="backToTop">↑ Top</button>
 
@@ -335,7 +394,44 @@ backToTop.addEventListener('click', () => {
     setTimeout(() => intro.remove(), 1500); // completely remove after fade
   }, 5000); // 5 seconds display
 });
+
+  const messagesEl = document.getElementById('kllexus-messages');
+const inputEl = document.getElementById('kllexus-text');
+const sendBtn = document.getElementById('kllexus-send');
+const BOT_URL = 'https://smartchatserver.onrender.com/chat';
+
+function addMessage(msg, sender) {
+  const div = document.createElement('div');
+  div.className = 'kllexus-msg ' + sender;
+  div.textContent = msg;
+  messagesEl.appendChild(div);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+async function sendMessage() {
+  const msg = inputEl.value.trim();
+  if(!msg) return;
+  addMessage(msg, 'user');
+  inputEl.value = '';
   
+  try {
+    const res = await fetch(BOT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: msg })
+    });
+    const data = await res.json();
+    addMessage(data.reply, 'bot');
+  } catch (e) {
+    addMessage("KL Lexus: Sorry, I couldn't connect to the server.", 'bot');
+  }
+}
+
+sendBtn.addEventListener('click', sendMessage);
+inputEl.addEventListener('keypress', (e) => {
+  if(e.key === 'Enter') sendMessage();
+});
+
 </script>
 </body>
 </html>
