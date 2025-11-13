@@ -119,13 +119,14 @@ header.scrolled {
   gap: 1rem;
 }
 
-header img {
+.logo-section svg {
+  width: 60px;
   height: 60px;
   filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
   transition: all 0.3s ease;
 }
 
-header img:hover {
+.logo-section svg:hover {
   transform: scale(1.1) rotate(5deg);
   filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.8));
 }
@@ -238,7 +239,6 @@ nav a:hover::before {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: slideInDown 1s ease;
-  text-shadow: 0 0 40px rgba(0, 212, 255, 0.5);
 }
 
 @keyframes slideInDown {
@@ -281,6 +281,8 @@ nav a:hover::before {
   position: relative;
   overflow: hidden;
   letter-spacing: 1px;
+  border: none;
+  cursor: pointer;
 }
 
 .btn::before {
@@ -399,6 +401,7 @@ h2::after {
   transition: all 0.5s ease;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .project-card::before {
@@ -454,6 +457,251 @@ h2::after {
   font-size: 1rem;
 }
 
+.learn-more {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--secondary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.learn-more:hover {
+  color: var(--accent);
+  transform: translateX(5px);
+}
+
+/* ===== Service Detail Modal ===== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 200;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, rgba(10, 14, 39, 0.95), rgba(26, 31, 58, 0.95));
+  border: 2px solid rgba(0, 212, 255, 0.3);
+  border-radius: 30px;
+  max-width: 1100px;
+  width: 100%;
+  padding: 3rem;
+  position: relative;
+  animation: slideInUp 0.5s ease;
+  box-shadow: 0 20px 60px rgba(0, 212, 255, 0.3);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.close-modal {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 2rem;
+  color: var(--text);
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.close-modal:hover {
+  background: rgba(255, 107, 53, 0.3);
+  transform: rotate(90deg);
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.modal-header h2 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+}
+
+.modal-header p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.2rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.service-intro {
+  background: rgba(0, 212, 255, 0.05);
+  border-left: 4px solid var(--secondary);
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.service-intro h3 {
+  color: var(--secondary);
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
+.service-intro p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.7;
+}
+
+.pricing-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.pricing-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.4s ease;
+  position: relative;
+  text-align: left;
+}
+
+.pricing-card.featured {
+  border-color: var(--accent);
+  background: rgba(255, 107, 53, 0.05);
+  transform: scale(1.05);
+}
+
+.pricing-card.featured::before {
+  content: 'POPULAR';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--accent), var(--gold));
+  color: white;
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.pricing-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3);
+  border-color: var(--secondary);
+}
+
+.pricing-card.featured:hover {
+  transform: translateY(-10px) scale(1.05);
+}
+
+.pricing-card h3 {
+  font-size: 1.8rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.price {
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  display: block;
+}
+
+.price-note {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  display: block;
+}
+
+.pricing-card ul {
+  list-style: none;
+  margin: 2rem 0;
+}
+
+.pricing-card li {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  line-height: 1.5;
+}
+
+.pricing-card li::before {
+  content: '✓';
+  color: var(--secondary);
+  font-weight: 900;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.btn-select {
+  width: 100%;
+  margin-top: 1.5rem;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+}
+
+.btn-select:hover {
+  transform: translateY(-3px);
+}
+
+.modal-cta {
+  background: rgba(255, 107, 53, 0.1);
+  border: 2px solid var(--accent);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.modal-cta h3 {
+  font-size: 1.8rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.modal-cta p {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
 /* ===== Contact Section ===== */
 #contact {
   background: rgba(255, 255, 255, 0.02);
@@ -462,22 +710,97 @@ h2::after {
   padding: 4rem 2rem;
 }
 
-#contact p {
+.contact-info {
+  margin: 2rem 0;
+}
+
+.contact-info p {
   font-size: 1.2rem;
   margin: 1rem 0;
   color: rgba(255, 255, 255, 0.8);
 }
 
-#contact a {
+.contact-info a {
   color: var(--secondary);
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
 }
 
-#contact a:hover {
+.contact-info a:hover {
   color: var(--accent);
   text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.contact-form {
+  max-width: 600px;
+  margin: 3rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-form input,
+.contact-form textarea,
+.contact-form select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  color: var(--text);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus,
+.contact-form select:focus {
+  outline: none;
+  border-color: var(--secondary);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.contact-form select {
+  cursor: pointer;
+}
+
+.contact-form select option {
+  background: var(--dark);
+  color: var(--text);
+}
+
+#form-status {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-top: 1rem;
+  display: none;
+}
+
+#form-status.success {
+  background: rgba(0, 212, 255, 0.2);
+  border: 1px solid var(--secondary);
+  color: var(--secondary);
+  display: block;
+}
+
+#form-status.error {
+  background: rgba(255, 107, 53, 0.2);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  display: block;
 }
 
 /* ===== Footer ===== */
@@ -554,7 +877,7 @@ footer p {
 
   nav {
     position: fixed;
-    top: 80px;
+    top: 90px;
     left: -100%;
     width: 100%;
     background: rgba(10, 14, 39, 0.98);
@@ -587,12 +910,34 @@ footer p {
     grid-template-columns: 1fr;
   }
 
-  header img {
+  .logo-section svg {
+    width: 45px;
     height: 45px;
   }
 
   header h1 {
     font-size: 1.3rem;
+  }
+
+  .modal-content {
+    padding: 2rem 1.5rem;
+    max-height: 85vh;
+  }
+
+  .modal-header h2 {
+    font-size: 2rem;
+  }
+
+  .pricing-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-card.featured {
+    transform: scale(1);
+  }
+
+  .pricing-card.featured:hover {
+    transform: translateY(-10px) scale(1);
   }
 }
 </style>
@@ -614,7 +959,75 @@ footer p {
 
 <header>
   <div class="logo-section">
-    <img src="kl-logo.svg" alt="KL Digital Logo">
+    <svg width="60" height="60" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="blueGlow">
+          <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <filter id="purpleGlow">
+          <feGaussianBlur stdDeviation="10" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <filter id="orangeGlow">
+          <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <linearGradient id="blueNeon" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#0066ff;stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="purpleNeon" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#b24bf3;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#7b2cbf;stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="orangeNeon" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#ffd700;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#ff6b35;stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <rect width="500" height="500" fill="#0a0e27"/>
+      <circle cx="150" cy="200" r="100" fill="#00d4ff" opacity="0.1" filter="url(#blueGlow)">
+        <animate attributeName="r" values="100;120;100" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="350" cy="200" r="100" fill="#ff6b35" opacity="0.1" filter="url(#orangeGlow)">
+        <animate attributeName="r" values="100;120;100" dur="3.5s" repeatCount="indefinite"/>
+      </circle>
+      <g filter="url(#blueGlow)">
+        <path d="M 100,120 L 100,280" stroke="url(#blueNeon)" stroke-width="16" stroke-linecap="round" fill="none"/>
+        <path d="M 100,180 L 180,120" stroke="url(#blueNeon)" stroke-width="16" stroke-linecap="round" fill="none"/>
+        <path d="M 100,200 L 180,280" stroke="url(#blueNeon)" stroke-width="16" stroke-linecap="round" fill="none"/>
+        <circle cx="100" cy="180" r="6" fill="#00d4ff" opacity="0.9">
+          <animate attributeName="r" values="6;9;6" dur="1.5s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+      <g filter="url(#purpleGlow)">
+        <path d="M 250,160 Q 230,140 210,140 Q 180,140 180,170 Q 180,190 200,210 L 240,250 Q 260,230 280,230 Q 300,230 300,250 Q 300,280 260,280 Q 230,280 210,260" 
+              stroke="url(#purpleNeon)" stroke-width="18" stroke-linecap="round" fill="none"/>
+        <circle cx="250" cy="200" r="8" fill="#b24bf3">
+          <animate attributeName="opacity" values="0.8;1;0.8" dur="1.5s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+      <g filter="url(#orangeGlow)">
+        <path d="M 340,120 L 340,280" stroke="url(#orangeNeon)" stroke-width="16" stroke-linecap="round" fill="none"/>
+        <path d="M 340,280 L 420,280" stroke="url(#orangeNeon)" stroke-width="16" stroke-linecap="round" fill="none"/>
+        <path d="M 350,150 L 370,170 L 350,190" stroke="#ffd700" stroke-width="3" fill="none" opacity="0.6">
+          <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+        </path>
+      </g>
+    </svg>
     <h1>KL DIGITAL</h1>
   </div>
   
@@ -626,7 +1039,7 @@ footer p {
 
   <nav id="mainNav">
     <a href="#hero">Home</a>
-    <a href="#projects">Projects</a>
+    <a href="#projects">Services</a>
     <a href="#contact">Contact</a>
     <a href="index.html" class="nav-foundation">K&L Foundation</a>
   </nav>
@@ -637,7 +1050,7 @@ footer p {
   <div class="hero-content">
     <h1>KL DIGITAL</h1>
     <p class="hero-tagline">INNOVATE <span>•</span> GEN Z <span>•</span> EMPOWER</p>
-    <a href="#projects" class="btn">Explore Projects</a>
+    <a href="#projects" class="btn">Explore Services</a>
     
     <div class="hero-tech-icons">
       <div class="tech-icon">🤖</div>
@@ -649,38 +1062,286 @@ footer p {
 </section>
 
 <section id="projects">
-  <h2>Our Projects</h2>
+  <h2>Our Services</h2>
   <div class="project-container">
-    <div class="project-card">
+    <div class="project-card" onclick="openModal('ai')">
       <div class="project-icon">🤖</div>
-      <h3>AI Workshops</h3>
-      <p>Exploring artificial intelligence applications and projects. Full method on how you can add artificial intelligence to your business and unlock exponential growth.</p>
+      <h3>AI Integration</h3>
+      <p>Transform your business with cutting-edge artificial intelligence. Unlock exponential growth through intelligent automation and data-driven insights.</p>
+      <span class="learn-more">Learn More & View Pricing →</span>
     </div>
-    <div class="project-card">
+    <div class="project-card" onclick="openModal('web')">
       <div class="project-icon">💻</div>
       <h3>Web Development</h3>
-      <p>Creating functional, aesthetic, and high-performance websites that drive results. Modern design meets cutting-edge technology.</p>
+      <p>Modern, responsive websites that convert visitors into customers. High-performance design meets seamless functionality on 12-month contracts.</p>
+      <span class="learn-more">Learn More & View Pricing →</span>
     </div>
-    <div class="project-card">
+    <div class="project-card" onclick="openModal('support')">
       <div class="project-icon">🛠️</div>
       <h3>Tech Support</h3>
-      <p>Providing hands-on technical assistance and IT troubleshooting. We've got your back with 24/7 expert support.</p>
+      <p>Expert technical assistance when you need it most. From troubleshooting to optimization, we've got your technology covered 24/7.</p>
+      <span class="learn-more">Learn More & View Pricing →</span>
     </div>
   </div>
 </section>
 
- <section id="contact" class="contact fade-in">
-    <h3>Contact Us</h3>
-    <form id="contactForm" class="contact-form" action="https://formspree.io/f/mnnokbbd" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" placeholder="Your Message" required></textarea>
-      <button type="submit" class="btn primary">Send Message</button>
-      <p id="form-status"></p>
-    </form>
-    <p>Or email directly: <a href="mailto:kldigital.active@gmail.com">kldigital.active@gmail.com</a></p>
-  </section>
+<!-- AI WORKSHOP MODAL -->
+<div id="aiModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal('ai')">×</span>
+    
+    <div class="modal-header">
+      <h2>AI Integration & Workshops</h2>
+      <p>Revolutionize your business operations with artificial intelligence that works as hard as you do.</p>
+    </div>
 
+    <div class="service-intro">
+      <h3>What We Offer</h3>
+      <p>
+        At KL Digital, we specialize in bringing AI to businesses of all sizes. Whether you're looking to automate repetitive tasks, 
+        gain deeper insights from your data, or create intelligent customer experiences, our AI solutions are designed to deliver 
+        measurable results. We provide hands-on workshops, custom AI implementations, and ongoing support to ensure your team 
+        maximizes the potential of artificial intelligence.
+      </p>
+    </div>
+
+    <div class="pricing-cards">
+      <div class="pricing-card">
+        <h3>AI Starter</h3>
+        <span class="price">R2,500</span>
+        <span class="price-note">One-time setup</span>
+        <ul>
+          <li>2-hour AI workshop for your team</li>
+          <li>Basic automation setup (1 process)</li>
+          <li>Introduction to AI tools for business</li>
+          <li>Email support for 30 days</li>
+          <li>Resource guide & documentation</li>
+        </ul>
+        <button class="btn btn-select" onclick="selectService('AI Starter - R2,500')">Select Plan</button>
+      </div>
+
+      <div class="pricing-card featured">
+        <h3>AI Business</h3>
+        <span class="price">R7,500</span>
+        <span class="price-note">One-time setup + 3 months support</span>
+        <ul>
+          <li>Full-day intensive AI workshop</li>
+          <li>Custom AI integration (up to 3 processes)</li>
+          <li>Chatbot or customer service AI implementation</li>
+          <li>Data analysis & insights dashboard</li>
+          <li>3 months of technical support</li>
+          <li>Monthly optimization check-ins</li>
+        </ul>
+        <button class="btn btn-select" onclick="selectService('AI Business - R7,500')">Select Plan</button>
+      </div>
+
+      <div class="pricing-card">
+        <h3>AI Enterprise</h3>
+        <span class="price">Custom</span>
+        <span class="price-note">Tailored to your needs</span>
+        <ul>
+          <li>Comprehensive AI strategy consultation</li>
+          <li>Unlimited process automation</li>
+          <li>Advanced machine learning models</li>
+          <li>Predictive analytics implementation</li>
+          <li>Dedicated AI specialist</li>
+          <li>12 months premium support</li>
+          <li>Quarterly performance reviews</li>
+        </ul>
+        <button class="btn btn-select" onclick="selectService('AI Enterprise - Custom Quote')">Request Quote</button>
+      </div>
+    </div>
+
+    <div class="modal-cta">
+      <h3>Ready to Transform Your Business?</h3>
+      <p>Let's discuss how AI can unlock exponential growth for your company.</p>
+      <button class="btn" onclick="closeModal('ai'); scrollToContact()">Get Started</button>
+    </div>
+  </div>
+</div>
+
+<!-- WEB DEVELOPMENT MODAL -->
+<div id="webModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal('web')">×</span>
+    
+    <div class="modal-header">
+      <h2>Website Development</h2>
+      <p>Modern, responsive, and SEO-optimized websites that represent your brand perfectly and drive real results.</p>
+    </div>
+
+    <div class="service-intro">
+      <h3>What We Offer</h3>
+      <p>
+        At KL Digital, we build websites designed to attract attention, convert visitors, and scale with your business. 
+        From elegant one-page sites to comprehensive business platforms, our web development focuses on speed, stunning design, 
+        and measurable outcomes. All our plans are structured on convenient 12-month contracts with affordable monthly payments, 
+        ensuring you get premium quality without the hefty upfront cost.
+      </p>
+    </div>
+
+    <div class="pricing-cards">
+      <div class="pricing-card">
+        <h3>Starter</h3>
+        <span class="price">R499</span>
+        <span class="price-note">per month x 12 months</span>
+        <ul>
+          <li>1-page responsive website</li>
+          <li>Mobile-friendly design</li>
+          <li>Custom branding & colors</li>
+          <li>Contact form integration</li>
+          <li>Basic SEO optimization</li>
+          <li>3-day delivery</li>
+          <li>SSL security certificate</li>
+        </ul>
+        <button class="btn btn-select" onclick="selectService('Website Starter - R499/month')">Select Plan</button>
+      </div>
+
+      <div class="pricing-card featured">
+        <h3>Professional</h3>
+        <span class="price">R999</span>
+        <span class="price-note">per month x 12 months</span>
+        <ul>
+          <li>Up to 5 pages</li>
+          <li>Advanced SEO setup</li>
+          <li>Google Analytics integration</li>
+          <li>Mobile optimization</li>
+          <li>Domain connection & setup</li>
+          <li>Social media integration</li>
+          <li>7-day delivery</li>
+          <li>Monthly performance reports</li>
+        </ul>
+        <button class="btn btn-select" onclick="selectService('Website Professional - R999/month')">Select Plan</button>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Elite</h3>
+        <span class="price">R1,499</span>
+        <span class="price-note">per month x 12 months</span>
+        <ul>
+          <li>Unlimited pages</li>
+          <li>Custom interactive features</li>
+          <li>E-commerce capabilities (optional)</li>
+          <li>Advanced analytics & tracking</li>
+          <li>Content management system</li>
+          <li>Premium hosting included</li>
+          <li>Priority support & updates</li>
+          <li>Conversion optimization</li>
+          <li>14-day delivery</li>
+        </ul>
+        <button class="btn btn-select" onclick="selectService('Website Elite - R1,499/month')">Select Plan</button>
+      </div>
+    </div>
+
+    <div class="modal-cta">
+      <h3>Let's Build Something Amazing</h3>
+      <p>Your website should work as hard as you do. Contact us to start your project today.</p>
+      <button class="btn" onclick="closeModal('web'); scrollToContact()">Get Started</button>
+    </div>
+  </div>
+</div>
+
+<!-- TECH SUPPORT MODAL -->
+<div id="supportModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal('support')">×</span>
+    
+    <div class="modal-header">
+      <h2>Tech Support & IT Solutions</h2>
+      <p>Professional technical assistance to keep your technology running smoothly, so you can focus on what matters most.</p>
+    </div>
+
+    <div class="service-intro">
+      <h3>What We Offer</h3>
+      <p>
+        From laptop issues to network problems, software installations to system optimization, KL Digital provides comprehensive 
+        technical support for individuals and businesses. Our experienced technicians diagnose and resolve issues quickly, 
+        ensuring minimal downtime. Whether you need one-time assistance or ongoing support, we're here to help you navigate 
+        any technical challenge with confidence and expertise.
+      </p>
+    </div>
+
+    <div class="pricing-cards">
+      <div class="pricing-card">
+        <h3>On-Demand</h3>
+        <span class="price">R350</span>
+        <span class="price-note">per incident</span>
+        <ul>
+          <li>Single issue resolution</li>
+          <li>Remote or on-site support</li>
+          <li>Software troubleshooting</li>
+          <li>Hardware diagnostics</li>
+          <li>Virus & malware removal</li>
+          <li>Same-day response</li>
+        </ul>
+        <button class="btn btn-select" onclick="selectService('Tech Support On-Demand - R350')">Select Plan</button>
+      </div>
+
+      <div class="pricing-card featured">
+        <h3>Monthly Care</h3>
+        <span class="price">R899</span>
+        <span class="price-note">per month</span>
+        <ul>
+          <li>Unlimited support tickets</li>
+          <li>Priority response (4-hour SLA)</li>
+          <li>Monthly system health checks</li>
+          <li>Software updates & maintenance</li>
+          <li>Data backup assistance</li>
+          <li>Remote & on-site options</li>
+          <li>24/7 emergency hotline</li>
+        </ul>
+        <button class="btn btn-select" onclick="selectService('Tech Support Monthly - R899/month')">Select Plan</button>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Business Support</h3>
+        <span class="price">R2,500</span>
+        <span class="price-note">per month</span>
+        <ul>
+          <li>Multi-device & user support</li>
+          <li>Network setup & management</li>
+          <li>Server maintenance</li>
+          <li>Security audits & monitoring</li>
+          <li>Dedicated support technician</li>
+          <li>1-hour emergency response</li>
+          <li>IT consulting included</li>
+          <li>Quarterly technology reviews</li>
+        </ul>
+        <button class="btn btn-select" onclick="selectService('Tech Support Business - R2,500/month')">Select Plan</button>
+      </div>
+    </div>
+
+    <div class="modal-cta">
+      <h3>Get the Support You Deserve</h3>
+      <p>Don't let tech issues slow you down. Contact us for reliable, expert support.</p>
+      <button class="btn" onclick="closeModal('support'); scrollToContact()">Get Started</button>
+    </div>
+  </div>
+</div>
+
+<section id="contact">
+  <h2>Contact Us</h2>
+  <div class="contact-info">
+    <p>Email: <a href="mailto:kldigital@kandlfoundation.com">kldigital@kandlfoundation.com</a></p>
+    <p>Location: Polokwane, Limpopo, South Africa</p>
+  </div>
+
+  <form id="contactForm" class="contact-form" action="https://formspree.io/f/mnnokbbd" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <input type="tel" name="phone" placeholder="Your Phone Number (optional)">
+    <select name="service" id="serviceSelect">
+      <option value="">Select a Service (optional)</option>
+      <option value="AI Integration">AI Integration</option>
+      <option value="Web Development">Web Development</option>
+      <option value="Tech Support">Tech Support</option>
+      <option value="General Inquiry">General Inquiry</option>
+    </select>
+    <textarea name="message" placeholder="Your Message" required></textarea>
+    <button type="submit" class="btn">Send Message</button>
+    <div id="form-status"></div>
+  </form>
+</section>
 
 <footer>
   <p>© 2025 K&L Foundation | KL Digital - Gen Z Innovation Hub</p>
@@ -748,6 +1409,100 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+// Modal functions
+function openModal(type) {
+  const modalId = type + 'Modal';
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeModal(type) {
+  const modalId = type + 'Modal';
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+}
+
+// Close modal when clicking outside
+window.addEventListener('click', (e) => {
+  if (e.target.classList.contains('modal')) {
+    e.target.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+});
+
+// Select service and scroll to contact
+function selectService(serviceName) {
+  const serviceSelect = document.getElementById('serviceSelect');
+  const messageField = document.querySelector('textarea[name="message"]');
+  
+  // Set service in dropdown if it matches
+  for (let option of serviceSelect.options) {
+    if (serviceName.includes(option.value) && option.value !== '') {
+      serviceSelect.value = option.value;
+      break;
+    }
+  }
+  
+  // Pre-fill message
+  messageField.value = `I'm interested in the ${serviceName} plan. Please provide more information.`;
+  
+  // Close modal and scroll to contact
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.classList.remove('active');
+  });
+  document.body.style.overflow = 'auto';
+  
+  scrollToContact();
+}
+
+function scrollToContact() {
+  const contactSection = document.getElementById('contact');
+  if (contactSection) {
+    contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// Form submission handling
+const contactForm = document.getElementById('contactForm');
+const formStatus = document.getElementById('form-status');
+
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    formStatus.textContent = 'Sending...';
+    formStatus.className = '';
+    formStatus.style.display = 'block';
+    
+    try {
+      const response = await fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        formStatus.textContent = 'Thank you! Your message has been sent successfully. We\'ll get back to you soon!';
+        formStatus.className = 'success';
+        contactForm.reset();
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      formStatus.textContent = 'Oops! There was a problem sending your message. Please try again or email us directly.';
+      formStatus.className = 'error';
+    }
+  });
+}
 </script>
 
 </body>
