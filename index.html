@@ -330,8 +330,12 @@
   color: #333;
 }
 </style>
+  
+<div id="kllexus-button" style="position:fixed;bottom:20px;right:20px;z-index:9999;">
+  <button style="background:#0055ff;color:white;padding:10px 15px;border:none;border-radius:50px;cursor:pointer;">Chat with KL Lexus</button>
+</div>
 
-<div id="kllexus-chat">
+<div id="kllexus-chat" style="display:none;">
   <div id="kllexus-messages"></div>
   <div id="kllexus-input">
     <input type="text" id="kllexus-text" placeholder="Ask KL Lexus..." />
@@ -433,5 +437,13 @@ inputEl.addEventListener('keypress', (e) => {
 });
 
 </script>
+  <script>
+const chatBtn = document.querySelector('#kllexus-button button');
+const chatBox = document.getElementById('kllexus-chat');
+chatBtn.addEventListener('click', () => {
+  chatBox.style.display = chatBox.style.display === 'none' ? 'flex' : 'none';
+});
+</script>
+  
 </body>
 </html>
