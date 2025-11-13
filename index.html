@@ -871,4 +871,28 @@ async function sendMessage() {
   try {
     const res = await fetch(BOT_URL, {
       method: 'POST',
-      headers
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: msg })
+    });
+    const data = await res.json();
+    addMessage(data.reply, 'bot');
+  } catch (e) {
+    addMessage("KL Lexus: Sorry, I couldn't connect to the server.", 'bot');
+  }
+}
+
+sendBtn.addEventListener('click', sendMessage);
+inputEl.addEventListener('keypress', (e) => {
+  if(e.key === 'Enter') sendMessage();
+});
+
+// Toggle chat
+const chatBtn = document.querySelector('#kllexus-button button');
+const chatBox = document.getElementById('kllexus-chat');
+chatBtn.addEventListener('click', () => {
+  chatBox.style.display = chatBox.style.display === 'none' ? 'flex' : 'none';
+});
+</script>
+
+</body>
+</html>
