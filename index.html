@@ -3,41 +3,93 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>K&L Foundation | Helping Those in Need</title>
+<title>K&L Foundation | Igniting Hope • Lifting Lives</title>
 <style>
+  /* ===== MEGA WOW INTRO SCREEN ===== */
   #intro-screen {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #000428 0%, #004e92 100%);
+    background: linear-gradient(135deg, #000428 0%, #004e92 50%, #000428 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     z-index: 9999;
     transition: opacity 1.5s ease;
+    overflow: hidden;
+  }
+
+  #intro-screen::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: 
+      radial-gradient(circle at 20% 50%, rgba(0, 102, 255, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(255, 107, 53, 0.3) 0%, transparent 50%);
+    animation: introRotate 10s linear infinite;
+  }
+
+  @keyframes introRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 
   #intro-screen img.intro-logo {
-    width: 200px;
+    width: 250px;
     height: auto;
-    margin-bottom: 1rem;
-    animation: logoFloat 2s ease infinite;
-    filter: drop-shadow(0 10px 30px rgba(255,107,53,0.5));
+    margin-bottom: 2rem;
+    animation: logoFloatBig 2s ease infinite;
+    filter: drop-shadow(0 20px 50px rgba(255,107,53,0.8));
+    position: relative;
+    z-index: 2;
   }
 
   #intro-screen h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: #ffffff;
     animation: fadeInUp 2s ease;
-    text-shadow: 0 0 20px rgba(0,212,255,0.5);
+    text-shadow: 0 0 30px rgba(0,212,255,0.8);
+    font-weight: 900;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 2;
   }
 
-  @keyframes logoFloat {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-15px); }
+  .intro-sparkles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    animation: sparkleFloat 3s infinite ease-in-out;
+  }
+
+  .sparkle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+  .sparkle:nth-child(2) { left: 30%; top: 70%; animation-delay: 0.5s; }
+  .sparkle:nth-child(3) { left: 60%; top: 30%; animation-delay: 1s; }
+  .sparkle:nth-child(4) { left: 80%; top: 60%; animation-delay: 1.5s; }
+  .sparkle:nth-child(5) { left: 50%; top: 10%; animation-delay: 2s; }
+  .sparkle:nth-child(6) { left: 20%; top: 80%; animation-delay: 2.5s; }
+
+  @keyframes sparkleFloat {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0; }
+    50% { transform: translateY(-30px) scale(1.5); opacity: 1; }
+  }
+
+  @keyframes logoFloatBig {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-20px) scale(1.1); }
   }
 
   @keyframes fadeInUp {
@@ -51,11 +103,14 @@
   }
 
   :root {
-    --primary-color: #1a73e8;
-    --accent-color: #ff9800;
-    --secondary-color: #1abc9c;
-    --text-color: #222;
-    --bg-color: #fafafa;
+    --primary: #0066ff;
+    --secondary: #00d4ff;
+    --accent: #ff6b35;
+    --gold: #ffd700;
+    --green: #1abc9c;
+    --dark: #000428;
+    --text: #222;
+    --bg: #fafafa;
   }
 
   * {
@@ -65,28 +120,80 @@
   }
 
   body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: var(--bg-color);
-    color: var(--text-color);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
-  /* WOW HEADER */
+  /* ===== ANIMATED BACKGROUND ===== */
+  .page-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.05;
+    animation: floatBg 15s infinite ease-in-out;
+  }
+
+  .bg-circle:nth-child(1) {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    top: 10%;
+    left: 5%;
+    animation-delay: 0s;
+  }
+
+  .bg-circle:nth-child(2) {
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(135deg, var(--accent), var(--gold));
+    bottom: 10%;
+    right: 5%;
+    animation-delay: 2s;
+  }
+
+  .bg-circle:nth-child(3) {
+    width: 250px;
+    height: 250px;
+    background: linear-gradient(135deg, var(--green), var(--secondary));
+    top: 50%;
+    left: 50%;
+    animation-delay: 4s;
+  }
+
+  @keyframes floatBg {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(50px, -50px) scale(1.2); }
+    66% { transform: translate(-30px, 30px) scale(0.9); }
+  }
+
+  /* ===== MEGA WOW HEADER ===== */
   header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(30px);
     box-shadow: 0 8px 32px rgba(0,0,0,0.1);
     transition: all 0.4s ease;
   }
 
   header.scrolled {
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 8px 40px rgba(0,102,255,0.2);
   }
 
   .header-container {
@@ -108,13 +215,14 @@
 
   .logo-section img {
     height: 70px;
-    transition: transform 0.3s ease, filter 0.3s ease;
-    filter: drop-shadow(0 4px 12px rgba(255,107,53,0.3));
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 4px 15px rgba(255,107,53,0.4));
+    cursor: pointer;
   }
 
   .logo-section img:hover {
-    transform: scale(1.05) rotate(2deg);
-    filter: drop-shadow(0 6px 20px rgba(255,107,53,0.5));
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 6px 25px rgba(255,107,53,0.7));
   }
 
   .brand-text {
@@ -125,7 +233,7 @@
   .brand-text h1 {
     font-size: 1.8rem;
     font-weight: 900;
-    background: linear-gradient(135deg, #0066ff 0%, #ff6b35 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -135,46 +243,10 @@
 
   .brand-text span {
     font-size: 0.75rem;
-    color: #ff6b35;
+    color: var(--accent);
     font-weight: 600;
     letter-spacing: 3px;
     text-transform: uppercase;
-  }
-
-  /* Animated background elements */
-  .header-bg-element {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.1;
-    pointer-events: none;
-  }
-
-  .header-bg-element.circle1 {
-    width: 100px;
-    height: 100px;
-    background: linear-gradient(135deg, #00d4ff, #0066ff);
-    top: -50px;
-    right: 10%;
-    animation: float1 6s ease-in-out infinite;
-  }
-
-  .header-bg-element.circle2 {
-    width: 150px;
-    height: 150px;
-    background: linear-gradient(135deg, #ff6b35, #ffd700);
-    bottom: -75px;
-    left: 5%;
-    animation: float2 8s ease-in-out infinite;
-  }
-
-  @keyframes float1 {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    50% { transform: translate(20px, -20px) rotate(180deg); }
-  }
-
-  @keyframes float2 {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    50% { transform: translate(-30px, 15px) rotate(-180deg); }
   }
 
   nav {
@@ -201,13 +273,13 @@
     left: 0;
     width: 0;
     height: 3px;
-    background: linear-gradient(90deg, #0066ff, #ff6b35);
+    background: linear-gradient(90deg, var(--primary), var(--accent));
     transition: width 0.3s ease;
     border-radius: 2px;
   }
 
   nav a:hover {
-    color: #0066ff;
+    color: var(--primary);
     transform: translateY(-2px);
   }
 
@@ -216,7 +288,7 @@
   }
 
   .nav-donate {
-    background: linear-gradient(135deg, #ff6b35 0%, #ffd700 100%);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--gold) 100%);
     color: white !important;
     padding: 0.7rem 1.5rem !important;
     border-radius: 50px;
@@ -243,11 +315,10 @@
   }
 
   .nav-donate:hover {
-    transform: translateY(-3px);
+    transform: translateY(-3px) scale(1.05);
     box-shadow: 0 8px 25px rgba(255,107,53,0.6);
   }
 
-  /* Mobile menu button */
   .mobile-menu-btn {
     display: none;
     flex-direction: column;
@@ -261,21 +332,21 @@
   .mobile-menu-btn span {
     width: 25px;
     height: 3px;
-    background: linear-gradient(90deg, #0066ff, #ff6b35);
+    background: linear-gradient(90deg, var(--primary), var(--accent));
     border-radius: 2px;
     transition: all 0.3s ease;
   }
 
-  /* Add padding to body for fixed header */
   body {
     padding-top: 100px;
   }
 
+  /* ===== MEGA HERO SECTION ===== */
   .hero {
     background: url('https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
     color: white;
     text-align: center;
-    padding: 8rem 1rem 6rem;
+    padding: 10rem 2rem 8rem;
     position: relative;
     overflow: hidden;
   }
@@ -287,20 +358,48 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(0,100,255,0.7) 0%, rgba(255,107,53,0.5) 100%);
+    background: linear-gradient(135deg, rgba(0,100,255,0.8) 0%, rgba(255,107,53,0.6) 100%);
+  }
+
+  .hero-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
+
+  .hero-particle {
+    position: absolute;
+    background: rgba(255,255,255,0.8);
+    border-radius: 50%;
+    animation: heroFloat 8s infinite ease-in-out;
+  }
+
+  .hero-particle:nth-child(1) { width: 6px; height: 6px; left: 15%; top: 25%; animation-delay: 0s; }
+  .hero-particle:nth-child(2) { width: 8px; height: 8px; left: 35%; top: 65%; animation-delay: 1s; }
+  .hero-particle:nth-child(3) { width: 5px; height: 5px; left: 55%; top: 40%; animation-delay: 2s; }
+  .hero-particle:nth-child(4) { width: 7px; height: 7px; left: 75%; top: 70%; animation-delay: 3s; }
+  .hero-particle:nth-child(5) { width: 6px; height: 6px; left: 85%; top: 30%; animation-delay: 4s; }
+
+  @keyframes heroFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+    50% { transform: translate(20px, -40px) scale(1.3); opacity: 1; }
   }
 
   .hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 
   .hero h1 {
-    font-size: 3rem;
+    font-size: 4rem;
     font-weight: 900;
-    text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    text-shadow: 0 4px 30px rgba(0,0,0,0.5);
     margin-bottom: 1.5rem;
     animation: fadeInScale 1s ease;
+    line-height: 1.2;
   }
 
   @keyframes fadeInScale {
@@ -308,19 +407,33 @@
     to { opacity: 1; transform: scale(1); }
   }
 
+  .hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    animation: fadeIn 1.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
   .hero-btn {
     display: inline-block;
-    background: linear-gradient(135deg, #ffd700 0%, #ff6b35 100%);
+    background: linear-gradient(135deg, var(--gold) 0%, var(--accent) 100%);
     color: white;
     font-weight: 700;
-    padding: 1rem 2.5rem;
+    padding: 1.2rem 3rem;
     border-radius: 50px;
     text-decoration: none;
     font-size: 1.2rem;
     transition: all 0.4s ease;
-    box-shadow: 0 8px 30px rgba(255,107,53,0.4);
+    box-shadow: 0 8px 30px rgba(255,107,53,0.5);
     position: relative;
     overflow: hidden;
+    letter-spacing: 1px;
   }
 
   .hero-btn::before {
@@ -337,62 +450,177 @@
   }
 
   .hero-btn:hover::before {
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 400px;
   }
 
   .hero-btn:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 15px 40px rgba(255,107,53,0.6);
+    transform: translateY(-8px) scale(1.08);
+    box-shadow: 0 15px 50px rgba(255,107,53,0.7);
   }
 
+  .hero-icons {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 4rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    transition: all 0.4s ease;
+    animation: iconFloat 3s ease-in-out infinite;
+  }
+
+  .hero-icon:nth-child(2) { animation-delay: 0.5s; }
+  .hero-icon:nth-child(3) { animation-delay: 1s; }
+  .hero-icon:nth-child(4) { animation-delay: 1.5s; }
+
+  @keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .hero-icon:hover {
+    background: rgba(255,255,255,0.25);
+    border-color: rgba(255,255,255,0.6);
+    transform: translateY(-15px) scale(1.15);
+    box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+  }
+
+  /* ===== SECTIONS WITH WOW ===== */
   section {
-    padding: 4rem 1.5rem;
+    padding: 6rem 2rem;
     max-width: 1200px;
     margin: auto;
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(50px);
+    transition: all 1s ease;
+    position: relative;
+    z-index: 1;
   }
 
-  section.visible { opacity: 1; transform: translateY(0); }
+  section.visible { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
 
   h2 {
-    color: #0066ff;
-    font-size: 2.5rem;
+    color: var(--primary);
+    font-size: 3rem;
     font-weight: 900;
     margin-bottom: 2rem;
     position: relative;
     display: inline-block;
+    text-align: center;
   }
 
   h2::after {
     content: '';
     position: absolute;
-    bottom: -10px;
+    bottom: -15px;
     left: 0;
-    width: 60%;
-    height: 4px;
-    background: linear-gradient(90deg, #ff6b35, #ffd700);
-    border-radius: 2px;
+    width: 70%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    border-radius: 3px;
   }
 
-  .work {
+  /* ===== IMPACT STATS WITH COUNTERS ===== */
+  .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
+    margin: 3rem 0;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 25px;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    transform: scaleX(0);
+    transition: transform 0.5s ease;
+  }
+
+  .stat-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .stat-card:hover {
+    transform: translateY(-15px) scale(1.03);
+    box-shadow: 0 25px 60px rgba(0,102,255,0.2);
+  }
+
+  .stat-card.blue {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+  }
+
+  .stat-card.orange {
+    background: linear-gradient(135deg, var(--accent), var(--gold));
+    color: white;
+  }
+
+  .stat-card.green {
+    background: linear-gradient(135deg, var(--green), #16a085);
+    color: white;
+  }
+
+  .stat-card h3 {
+    font-size: 4rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+  }
+
+  .stat-card p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  /* ===== PROJECT CARDS MEGA WOW ===== */
+  .work {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
     padding: 2rem 0;
   }
 
-  .card, .stat-card {
+  .card {
     background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    padding: 1.5rem;
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    padding: 0;
     text-align: center;
-    transition: all 0.4s ease;
+    transition: all 0.5s ease;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
   }
 
   .card::before {
@@ -401,205 +629,501 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 5px;
-    background: linear-gradient(90deg, #0066ff, #ff6b35);
+    height: 6px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
     transform: scaleX(0);
-    transition: transform 0.4s ease;
+    transition: transform 0.5s ease;
   }
 
   .card:hover::before {
     transform: scaleX(1);
   }
 
-  .card img {
+  .card-image {
     width: 100%;
-    height: 200px;
+    height: 250px;
     object-fit: cover;
-    border-radius: 15px;
-    margin-bottom: 1rem;
-    transition: transform 0.4s ease;
+    transition: transform 0.5s ease;
+  }
+
+  .card:hover .card-image {
+    transform: scale(1.1);
+  }
+
+  .card-content {
+    padding: 2rem 1.5rem;
   }
 
   .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-  }
-
-  .card:hover img {
-    transform: scale(1.05);
+    transform: translateY(-20px);
+    box-shadow: 0 25px 60px rgba(0,102,255,0.25);
   }
 
   .card h3 { 
-    margin: 1rem 0 0.5rem; 
-    color: #0066ff;
-    font-size: 1.3rem;
+    margin: 0 0 1rem; 
+    color: var(--primary);
+    font-size: 1.5rem;
     font-weight: 700;
   }
   
   .card p { 
     font-size: 1rem; 
     color: #555;
-    line-height: 1.6;
+    line-height: 1.7;
   }
 
-  footer {
-    background: linear-gradient(135deg, #000428 0%, #004e92 100%);
-    color: white;
+  /* ===== TESTIMONIALS SLIDER ===== */
+  .testimonials {
+    background: linear-gradient(135deg, rgba(0,102,255,0.05), rgba(255,107,53,0.05));
+    border-radius: 30px;
+    padding: 4rem 2rem;
+    margin: 4rem 0;
+    position: relative;
+  }
+
+  .testimonial-slider {
+    max-width: 800px;
+    margin: 0 auto;
     text-align: center;
-    padding: 3rem 1rem;
-    margin-top: 4rem;
   }
 
-  footer a { 
-    color: #ffd700; 
-    text-decoration: none; 
-    font-weight: bold;
-    transition: color 0.3s ease;
-  }
-
-  footer a:hover {
-    color: #ff6b35;
-  }
-
-  #backToTop {
-    position: fixed; 
-    bottom: 30px; 
-    right: 30px; 
+  .testimonial {
+    padding: 2rem;
     display: none;
-    background: linear-gradient(135deg, #0066ff, #00d4ff);
-    color: white; 
-    border: none;
-    width: 50px;
-    height: 50px;
+    animation: fadeSlide 0.5s ease;
+  }
+
+  .testimonial.active {
+    display: block;
+  }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .testimonial blockquote {
+    font-size: 1.3rem;
+    font-style: italic;
+    color: #333;
+    margin: 2rem 0;
+    padding: 2rem;
+    border-left: 5px solid var(--accent);
+    background: rgba(255,255,255,0.8);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+
+  .testimonial-author {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1.1rem;
+  }
+
+  .slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    cursor: pointer; 
-    font-weight: bold; 
-    font-size: 1.2rem;
-    z-index: 1000;
-    box-shadow: 0 4px 20px rgba(0,102,255,0.4);
+    background: rgba(0,102,255,0.3);
+    cursor: pointer;
     transition: all 0.3s ease;
   }
 
-  #backToTop:hover { 
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 8px 30px rgba(0,102,255,0.6);
+  .dot.active {
+    background: var(--primary);
+    transform: scale(1.3);
   }
 
-  blockquote { 
-    font-style: italic; 
-    color: #555; 
-    margin-top: 1.5rem;
-    padding: 1rem;
-    border-left: 4px solid #ff6b35;
-    background: rgba(255,107,53,0.05);
-    border-radius: 5px;
+  /* ===== VOLUNTEER CTA ===== */
+  .volunteer-cta {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border-radius: 30px;
+    padding: 4rem 2rem;
+    text-align: center;
+    margin: 4rem 0;
+    position: relative;
+    overflow: hidden;
   }
 
-  .stat-card {
+  .volunteer-cta::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    top: -100px;
+    right: -100px;
+    animation: pulse 3s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+  }
+
+  .volunteer-cta h3 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .volunteer-cta p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .volunteer-cta button {
+    background: white;
+    color: var(--primary);
+    font-weight: 700;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 2;
+  }
+
+  .volunteer-cta button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+  }
+
+  /* ===== HOW TO HELP LIST ===== */
+  .help-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .help-item {
     padding: 2rem;
+    background: white;
+    border-radius: 20px;
+    border-left: 6px solid var(--primary);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
   }
 
-  .stat-card h3 {
-    font-size: 3rem;
-    font-weight: 900;
-    margin-bottom: 0.5rem;
+  .help-item:nth-child(2) {
+    border-left-color: var(--accent);
   }
 
-  .stat-card p {
-    font-size: 1rem;
-    opacity: 0.9;
+  .help-item:nth-child(3) {
+    border-left-color: var(--green);
   }
 
-  /* KL Lexus Chat Widget */
+  .help-item:hover {
+    transform: translateX(10px);
+    box-shadow: 0 15px 40px rgba(0,102,255,0.15);
+  }
+
+  .help-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+  }
+
+  .help-text {
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 600;
+  }
+
+  /* ===== FOOTER MEGA ===== */
+  footer {
+    background: linear-gradient(135deg, var(--dark) 0%, #004e92 100%);
+    color: white;
+    padding: 4rem 2rem;
+    margin-top: 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  footer::before {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(0,212,255,0.1), transparent);
+    bottom: -200px;
+    right: -200px;
+    border-radius: 50%;
+  }
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .footer-logo {
+    width: 120px;
+    margin-bottom: 1.5rem;
+    filter: brightness(0) invert(1);
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 1.05rem;
+  }
+
+  .footer-links a:hover {
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .social-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .social-icon:hover {
+    background: var(--accent);
+    transform: translateY(-5px) rotate(10deg);
+  }
+
+  /* ===== BACK TO TOP MEGA ===== */
+  #backToTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: none;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.5rem;
+    z-index: 1000;
+    box-shadow: 0 8px 25px rgba(0,102,255,0.5);
+    transition: all 0.4s ease;
+  }
+
+  #backToTop:hover {
+    transform: translateY(-8px) scale(1.15) rotate(360deg);
+    box-shadow: 0 12px 40px rgba(0,102,255,0.7);
+  }
+
+  /* ===== KL LEXUS CHAT MEGA WOW ===== */
   #kllexus-chat {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 350px;
-    max-height: 500px;
+    bottom: 100px;
+    right: 30px;
+    width: 380px;
+    max-height: 550px;
     background: white;
-    border: 2px solid #0055ff;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-    display: flex;
+    border: 3px solid var(--primary);
+    border-radius: 25px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+    display: none;
     flex-direction: column;
     overflow: hidden;
-    font-family: Arial, sans-serif;
     z-index: 9999;
+    animation: slideInUp 0.4s ease;
   }
-  
+
+  @keyframes slideInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .chat-header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .chat-header h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .chat-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .chat-close:hover {
+    transform: rotate(90deg);
+  }
+
   #kllexus-messages {
     flex: 1;
-    padding: 15px;
+    padding: 1.5rem;
     overflow-y: auto;
+    background: linear-gradient(to bottom, #f5f5f5, #ffffff);
   }
-  
+
   #kllexus-input {
     display: flex;
-    border-top: 1px solid #eee;
+    border-top: 2px solid #eee;
+    background: white;
   }
-  
+
   #kllexus-input input {
     flex: 1;
-    padding: 15px;
+    padding: 1rem 1.5rem;
     border: none;
     outline: none;
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
-  
+
   #kllexus-input button {
-    padding: 15px 20px;
-    background: linear-gradient(135deg, #0066ff, #00d4ff);
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: white;
     border: none;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 700;
     transition: all 0.3s ease;
+    min-width: 80px;
   }
 
   #kllexus-input button:hover {
     background: linear-gradient(135deg, #0055dd, #00bbff);
   }
-  
-  .kllexus-msg { 
-    margin-bottom: 15px;
-    padding: 10px 15px;
-    border-radius: 15px;
+
+  .kllexus-msg {
+    margin-bottom: 1rem;
+    padding: 1rem 1.2rem;
+    border-radius: 20px;
     max-width: 80%;
+    animation: messageSlide 0.3s ease;
   }
-  
-  .kllexus-msg.bot { 
+
+  @keyframes messageSlide {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .kllexus-msg.bot {
     background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-    color: #0055ff;
+    color: var(--primary);
     margin-right: auto;
+    border-bottom-left-radius: 5px;
+    font-weight: 500;
   }
-  
-  .kllexus-msg.user { 
-    background: linear-gradient(135deg, #0066ff, #00d4ff);
+
+  .kllexus-msg.user {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: white;
     margin-left: auto;
     text-align: right;
+    border-bottom-right-radius: 5px;
+    font-weight: 500;
+  }
+
+  #kllexus-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9998;
   }
 
   #kllexus-button button {
-    background: linear-gradient(135deg, #0066ff, #00d4ff);
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
     color: white;
-    padding: 15px 25px;
+    padding: 1.2rem 2rem;
     border: none;
     border-radius: 50px;
     cursor: pointer;
     font-weight: 700;
-    font-size: 0.95rem;
-    box-shadow: 0 4px 20px rgba(0,102,255,0.4);
-    transition: all 0.3s ease;
+    font-size: 1rem;
+    box-shadow: 0 8px 25px rgba(0,102,255,0.5);
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   #kllexus-button button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(0,102,255,0.6);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(0,102,255,0.7);
   }
 
-  /* Responsive */
+  #kllexus-button button::before {
+    content: '💬';
+    font-size: 1.2rem;
+  }
+
+  /* ===== SCROLL PROGRESS BAR ===== */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary), var(--accent), var(--gold));
+    z-index: 9999;
+    transform-origin: left;
+    transition: transform 0.1s ease;
+  }
+
+  /* ===== IMPACT COUNTER ANIMATION ===== */
+  @keyframes countUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== RESPONSIVE MEGA ===== */
   @media (max-width: 768px) {
     .mobile-menu-btn {
       display: flex;
@@ -611,12 +1135,14 @@
       left: -100%;
       width: 100%;
       background: rgba(255,255,255,0.98);
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(30px);
       flex-direction: column;
       padding: 2rem;
       gap: 1.5rem;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       transition: left 0.4s ease;
+      max-height: calc(100vh - 90px);
+      overflow-y: auto;
     }
 
     nav.active {
@@ -624,33 +1150,84 @@
     }
 
     .hero h1 {
-      font-size: 2rem;
+      font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
     }
 
     h2 {
-      font-size: 2rem;
+      font-size: 2.2rem;
     }
 
     .logo-section img {
-      height: 50px;
+      height: 55px;
     }
 
     .brand-text h1 {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
+    }
+
+    #kllexus-chat {
+      width: 90%;
+      right: 5%;
+      bottom: 90px;
+    }
+
+    #kllexus-button {
+      right: 50%;
+      transform: translateX(50%);
+    }
+
+    .work {
+      grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-icons {
+      gap: 1rem;
+    }
+
+    .hero-icon {
+      width: 60px;
+      height: 60px;
+      font-size: 1.5rem;
     }
   }
 </style>
-<link rel="icon" type="image/png" href="/favicon.ico">
 </head>
 <body>
+
+<!-- Scroll Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Intro Screen -->
 <div id="intro-screen">
+  <div class="intro-sparkles">
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+  </div>
   <img src="logo.svg" alt="K&L Foundation Logo" class="intro-logo">
   <h2>Welcome to K&L Foundation</h2>
 </div>
 
+<!-- Animated Background -->
+<div class="page-bg">
+  <div class="bg-circle"></div>
+  <div class="bg-circle"></div>
+  <div class="bg-circle"></div>
+</div>
+
+<!-- Header -->
 <header>
-  <div class="header-bg-element circle1"></div>
-  <div class="header-bg-element circle2"></div>
   <div class="header-container">
     <div class="logo-section">
       <img src="logo.svg" alt="K&L Foundation Logo">
@@ -677,101 +1254,251 @@
   </div>
 </header>
 
+<!-- Hero Section -->
 <div class="hero">
+  <div class="hero-particles">
+    <div class="hero-particle"></div>
+    <div class="hero-particle"></div>
+    <div class="hero-particle"></div>
+    <div class="hero-particle"></div>
+    <div class="hero-particle"></div>
+  </div>
   <div class="hero-content">
     <h1>Together, We Bring Warmth and Hope</h1>
+    <p class="hero-subtitle">Empowering Communities • Changing Lives • Creating Impact</p>
     <a href="donate.html" class="hero-btn">
-      <span>Donate Now</span>
+      <span>Make a Difference Today</span>
     </a>
+    
+    <div class="hero-icons">
+      <div class="hero-icon">🤝</div>
+      <div class="hero-icon">❤️</div>
+      <div class="hero-icon">🌟</div>
+      <div class="hero-icon">🎁</div>
+    </div>
   </div>
 </div>
 
+<!-- About Section -->
 <section id="about">
-  <h2>About Us</h2>
-  <p>K&L Foundation is a community-driven initiative based in South Africa, dedicated to helping those in need. We donate clothes, pads, food, and blankets to the less fortunate, ensuring that no one is left behind. We believe kindness can change lives, one act at a time.</p>
+  <h2>About K&L Foundation</h2>
+  <p style="font-size: 1.2rem; line-height: 1.8; color: #555; max-width: 900px; margin: 0 auto 3rem;">
+    K&L Foundation is a community-driven initiative based in South Africa, dedicated to helping those in need. 
+    We donate clothes, pads, food, and blankets to the less fortunate, ensuring that no one is left behind. 
+    We believe kindness can change lives, one act at a time.
+  </p>
 
-  <div style="display:flex; flex-wrap:wrap; gap:1.5rem; margin-top:3rem;">
-    <div class="stat-card" style="flex:1; min-width:220px; background:linear-gradient(135deg, #0066ff, #00d4ff); color:white;">
+  <!-- Impact Stats -->
+  <div class="stats-grid">
+    <div class="stat-card blue">
       <h3 class="stat-number" data-target="25">0</h3>
-      <p>People helped this year</p>
+      <p>People Helped This Year</p>
     </div>
-    <div class="stat-card" style="flex:1; min-width:220px; background:linear-gradient(135deg, #ff6b35, #ffd700); color:white;">
+    <div class="stat-card orange">
       <h3 class="stat-number" data-target="15">0</h3>
-      <p>Clothes distributed</p>
+      <p>Clothes Distributed</p>
     </div>
-    <div class="stat-card" style="flex:1; min-width:220px; background:linear-gradient(135deg, #1abc9c, #16a085); color:white;">
+    <div class="stat-card green">
       <h3 class="stat-number" data-target="20">0</h3>
-      <p>Blankets donated</p>
+      <p>Blankets Donated</p>
     </div>
   </div>
 
-  <p style="margin-top:2rem;">Our mission is to create a compassionate community where everyone has access to basic needs. Our vision is a South Africa where no one sleeps hungry or cold, and young women have access to essential hygiene products.</p>
+  <p style="font-size: 1.15rem; line-height: 1.8; color: #555; max-width: 900px; margin: 3rem auto 2rem;">
+    Our mission is to create a compassionate community where everyone has access to basic needs. 
+    Our vision is a South Africa where no one sleeps hungry or cold, and young women have access 
+    to essential hygiene products.
+  </p>
 
-  <blockquote>"The smallest act of kindness is worth more than the grandest intention." – K&L Foundation</blockquote>
-  <blockquote>"Helping one person might not change the world, but it could change the world for one person." – K&L Foundation</blockquote>
+  <!-- Testimonials Slider -->
+  <div class="testimonials">
+    <h2 style="margin-bottom: 2rem;">Words That Inspire Us</h2>
+    <div class="testimonial-slider">
+      <div class="testimonial active">
+        <blockquote>
+          "The smallest act of kindness is worth more than the grandest intention."
+        </blockquote>
+        <p class="testimonial-author">— K&L Foundation</p>
+      </div>
+      <div class="testimonial">
+        <blockquote>
+          "Helping one person might not change the world, but it could change the world for one person."
+        </blockquote>
+        <p class="testimonial-author">— K&L Foundation</p>
+      </div>
+      <div class="testimonial">
+        <blockquote>
+          "Together, we are stronger. Together, we can make a difference."
+        </blockquote>
+        <p class="testimonial-author">— K&L Foundation</p>
+      </div>
+    </div>
+    <div class="slider-dots">
+      <span class="dot active" onclick="showTestimonial(0)"></span>
+      <span class="dot" onclick="showTestimonial(1)"></span>
+      <span class="dot" onclick="showTestimonial(2)"></span>
+    </div>
+  </div>
 </section>
 
+<!-- Our Work Section -->
 <section id="work">
-  <h2>Our Work</h2>
+  <h2>Our Life-Changing Work</h2>
   <div class="work">
     <div class="card">
-      <img src="images/food.png" alt="Volunteers distributing food">
-      <h3>Food Drives</h3>
-      <p>Providing meals to communities facing hunger.</p>
+      <img src="images/food.png" alt="Food distribution" class="card-image">
+      <div class="card-content">
+        <h3>🍽️ Food Drives</h3>
+        <p>Providing nutritious meals to communities facing hunger. Every meal brings hope and strength.</p>
+      </div>
     </div>
     <div class="card">
-      <img src="images/clothing.png" alt="Warm clothing distribution">
-      <h3>Clothing Donations</h3>
-      <p>Supplying warm clothes for children and adults.</p>
+      <img src="images/clothing.png" alt="Clothing distribution" class="card-image">
+      <div class="card-content">
+        <h3>👕 Clothing Donations</h3>
+        <p>Supplying warm, quality clothes for children and adults in need during harsh weather.</p>
+      </div>
     </div>
     <div class="card">
-      <img src="images/sanitarypads.png" alt="Young women receiving sanitary pads">
-      <h3>Sanitary Pads</h3>
-      <p>Empowering young women through hygiene support.</p>
+      <img src="images/sanitarypads.png" alt="Sanitary pads distribution" class="card-image">
+      <div class="card-content">
+        <h3>💝 Dignity Pads</h3>
+        <p>Empowering young women through essential hygiene support and education.</p>
+      </div>
     </div>
     <div class="card">
-      <img src="images/Blankets.png" alt="Blankets being distributed">
-      <h3>Blanket Campaigns</h3>
-      <p>Bringing comfort during the cold winter months.</p>
+      <img src="images/Blankets.png" alt="Blanket distribution" class="card-image">
+      <div class="card-content">
+        <h3>🛏️ Warmth Campaigns</h3>
+        <p>Bringing comfort and warmth during cold winter months to those who need it most.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Volunteer CTA -->
+  <div class="volunteer-cta">
+    <h3>Join Our Team of Change-Makers!</h3>
+    <p>Volunteer with us and be part of something extraordinary. Your time and energy can transform lives.</p>
+    <button onclick="scrollToContact()">Become a Volunteer</button>
+  </div>
+</section>
+
+<!-- How You Can Help Section -->
+<section id="help">
+  <h2>How You Can Make an Impact</h2>
+  <p style="font-size: 1.2rem; line-height: 1.8; color: #555; max-width: 900px; margin: 0 auto 3rem;">
+    Your support keeps us going. Whether it's a donation, volunteering, or spreading awareness — every action counts and creates ripples of positive change.
+  </p>
+  
+  <ul class="help-list">
+    <li class="help-item">
+      <span class="help-icon">🙋</span>
+      <span class="help-text">Volunteer your time to help distribute goods and connect with communities</span>
+    </li>
+    <li class="help-item">
+      <span class="help-icon">💝</span>
+      <span class="help-text">Donate clothes, food, blankets, or funds to directly support our cause</span>
+    </li>
+    <li class="help-item">
+      <span class="help-icon">📢</span>
+      <span class="help-text">Share our mission with your community and amplify our impact</span>
+    </li>
+  </ul>
+
+  <div style="text-align: center; margin-top: 3rem;">
+    <a href="donate.html" class="hero-btn">Donate Now</a>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact">
+  <h2>Get in Touch</h2>
+  <div style="max-width: 700px; margin: 0 auto; background: white; padding: 3rem; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.1);">
+    <p style="font-size: 1.2rem; line-height: 2; margin-bottom: 1.5rem;">
+      <strong style="color: var(--primary);">Email:</strong> 
+      <a href="mailto:kandlfoundation.sa@gmail.com" style="color: var(--accent); font-weight: 600; text-decoration: none;">
+        kandlfoundation.sa@gmail.com
+      </a>
+    </p>
+    <p style="font-size: 1.2rem; line-height: 2;">
+      <strong style="color: var(--primary);">Location:</strong> 
+      Polokwane, Limpopo, South Africa 🇿🇦
+    </p>
+    
+    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #eee;">
+      <p style="font-size: 1.1rem; color: #666; margin-bottom: 1.5rem;">
+        Have questions? Want to partner with us? We'd love to hear from you!
+      </p>
+      <button onclick="location.href='mailto:kandlfoundation.sa@gmail.com'" class="hero-btn" style="font-size: 1rem; padding: 1rem 2rem;">
+        Send Us a Message
+      </button>
     </div>
   </div>
 </section>
 
-<section id="help">
-  <h2>How You Can Help</h2>
-  <p>Your support keeps us going. Whether it's a donation, volunteering, or spreading awareness — every action counts.</p>
-  <ul style="list-style: none; padding: 0;">
-    <li style="padding: 1rem; margin: 0.5rem 0; background: rgba(0,102,255,0.05); border-left: 4px solid #0066ff; border-radius: 5px;">✓ Volunteer your time to help distribute goods.</li>
-    <li style="padding: 1rem; margin: 0.5rem 0; background: rgba(255,107,53,0.05); border-left: 4px solid #ff6b35; border-radius: 5px;">✓ Donate clothes, food, or funds to our cause.</li>
-    <li style="padding: 1rem; margin: 0.5rem 0; background: rgba(26,188,156,0.05); border-left: 4px solid #1abc9c; border-radius: 5px;">✓ Share our mission with your community.</li>
-  </ul>
-</section>
-
-<section id="contact">
-  <h2>Contact Us</h2>
-  <p style="font-size: 1.1rem; line-height: 2;">Email: <a href="mailto:kandlfoundation.sa@gmail.com" style="color: #0066ff; font-weight: 600;">kandlfoundation.sa@gmail.com</a></p>
-  <p style="font-size: 1.1rem; line-height: 2;">Location: Polokwane, Limpopo, South Africa</p>
-</section>
-
+<!-- Footer -->
 <footer>
-  <p style="font-size: 1.1rem;">© 2025 K&L Foundation | Built with love and community spirit.</p>
+  <div class="footer-content">
+    <img src="logo.svg" alt="K&L Foundation" class="footer-logo">
+    
+    <div class="footer-links">
+      <a href="#about">About Us</a>
+      <a href="#work">Our Work</a>
+      <a href="#help">Get Involved</a>
+      <a href="donate.html">Donate</a>
+      <a href="kldigital.html">KL Digital</a>
+    </div>
+
+    <div class="footer-social">
+      <div class="social-icon" title="Facebook">📘</div>
+      <div class="social-icon" title="Twitter">🐦</div>
+      <div class="social-icon" title="Instagram">📷</div>
+      <div class="social-icon" title="LinkedIn">💼</div>
+    </div>
+
+    <p style="font-size: 1.1rem; margin-top: 2rem; opacity: 0.9;">
+      © 2025 K&L Foundation | Built with ❤️ and community spirit
+    </p>
+    <p style="font-size: 0.95rem; margin-top: 1rem; opacity: 0.7;">
+      Igniting Hope • Lifting Lives • Creating Change
+    </p>
+  </div>
 </footer>
 
-<div id="kllexus-button" style="position:fixed;bottom:20px;right:20px;z-index:9999;">
+<!-- KL Lexus Chat Button -->
+<div id="kllexus-button">
   <button>Chat with KL Lexus</button>
 </div>
 
-<div id="kllexus-chat" style="display:none;">
-  <div id="kllexus-messages"></div>
+<!-- KL Lexus Chat Widget -->
+<div id="kllexus-chat">
+  <div class="chat-header">
+    <h3>💬 KL Lexus Assistant</h3>
+    <button class="chat-close" onclick="toggleChat()">×</button>
+  </div>
+  <div id="kllexus-messages">
+    <div class="kllexus-msg bot">
+      Hi! I'm KL Lexus, your K&L Foundation assistant. How can I help you today? 😊
+    </div>
+  </div>
   <div id="kllexus-input">
-    <input type="text" id="kllexus-text" placeholder="Ask KL Lexus..." />
+    <input type="text" id="kllexus-text" placeholder="Ask me anything..." />
     <button id="kllexus-send">Send</button>
   </div>
 </div>
 
+<!-- Back to Top Button -->
 <button id="backToTop">↑</button>
 
 <script>
+// Scroll Progress Bar
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  document.getElementById('progressBar').style.transform = `scaleX(${scrolled / 100})`;
+});
+
 // Mobile menu toggle
 function toggleMobileMenu() {
   const nav = document.getElementById('mainNav');
@@ -799,37 +1526,59 @@ window.addEventListener('scroll', () => {
 const sections = document.querySelectorAll('section');
 const revealSection = () => {
   sections.forEach(section => {
-    if(section.getBoundingClientRect().top < window.innerHeight / 1.1) section.classList.add('visible');
+    if(section.getBoundingClientRect().top < window.innerHeight / 1.1) {
+      section.classList.add('visible');
+    }
   });
 };
 window.addEventListener('scroll', revealSection);
 window.addEventListener('load', revealSection);
 
-// Animate stats with one-time flag
+// Animate stats with counter
 const stats = document.querySelectorAll('.stat-number');
-const statCards = document.querySelectorAll('.stat-card');
 let statsAnimated = false;
 function animateStats() {
   if(statsAnimated) return;
-  stats.forEach((stat, i) => {
+  stats.forEach((stat) => {
     const target = +stat.getAttribute('data-target');
     let count = 0;
-    const increment = target / 100;
+    const increment = target / 60;
     const update = () => {
       count += increment;
       stat.innerText = count < target ? Math.ceil(count) : target;
       if(count < target) requestAnimationFrame(update);
     };
     update();
-    statCards[i].classList.add('visible');
   });
   statsAnimated = true;
 }
 
 window.addEventListener('scroll', () => {
   const aboutSection = document.getElementById('about');
-  if(aboutSection.getBoundingClientRect().top < window.innerHeight / 1.2) animateStats();
+  if(aboutSection && aboutSection.getBoundingClientRect().top < window.innerHeight / 1.2) {
+    animateStats();
+  }
 });
+
+// Testimonials Slider
+let currentTestimonial = 0;
+const testimonials = document.querySelectorAll('.testimonial');
+const dots = document.querySelectorAll('.dot');
+
+function showTestimonial(index) {
+  testimonials.forEach(t => t.classList.remove('active'));
+  dots.forEach(d => d.classList.remove('active'));
+  
+  testimonials[index].classList.add('active');
+  dots[index].classList.add('active');
+  currentTestimonial = index;
+}
+
+// Auto-rotate testimonials
+setInterval(() => {
+  currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+  showTestimonial(currentTestimonial);
+}, 5000);
 
 // Back-to-top button
 const backToTop = document.getElementById('backToTop');
@@ -839,6 +1588,11 @@ window.addEventListener('scroll', () => {
 backToTop.addEventListener('click', () => {
   window.scrollTo({top:0, behavior:'smooth'});
 });
+
+// Scroll to contact
+function scrollToContact() {
+  document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+}
 
 // Intro screen
 window.addEventListener("load", () => {
@@ -853,6 +1607,8 @@ window.addEventListener("load", () => {
 const messagesEl = document.getElementById('kllexus-messages');
 const inputEl = document.getElementById('kllexus-text');
 const sendBtn = document.getElementById('kllexus-send');
+const chatBox = document.getElementById('kllexus-chat');
+const chatBtn = document.querySelector('#kllexus-button button');
 const BOT_URL = 'https://smartchatserver.onrender.com/chat';
 
 function addMessage(msg, sender) {
@@ -868,6 +1624,7 @@ async function sendMessage() {
   if(!msg) return;
   addMessage(msg, 'user');
   inputEl.value = '';
+  
   try {
     const res = await fetch(BOT_URL, {
       method: 'POST',
@@ -877,7 +1634,7 @@ async function sendMessage() {
     const data = await res.json();
     addMessage(data.reply, 'bot');
   } catch (e) {
-    addMessage("KL Lexus: Sorry, I couldn't connect to the server.", 'bot');
+    addMessage("KL Lexus: Sorry, I couldn't connect to the server. Please try again later.", 'bot');
   }
 }
 
@@ -887,10 +1644,27 @@ inputEl.addEventListener('keypress', (e) => {
 });
 
 // Toggle chat
-const chatBtn = document.querySelector('#kllexus-button button');
-const chatBox = document.getElementById('kllexus-chat');
-chatBtn.addEventListener('click', () => {
-  chatBox.style.display = chatBox.style.display === 'none' ? 'flex' : 'none';
+function toggleChat() {
+  if(chatBox.style.display === 'none' || chatBox.style.display === '') {
+    chatBox.style.display = 'flex';
+    chatBtn.parentElement.style.display = 'none';
+  } else {
+    chatBox.style.display = 'none';
+    chatBtn.parentElement.style.display = 'block';
+  }
+}
+
+chatBtn.addEventListener('click', toggleChat);
+
+// Smooth scroll for all anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
 });
 </script>
 
