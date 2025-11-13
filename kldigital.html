@@ -3,46 +3,668 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KL Digital | K&L Foundation</title>
-<link rel="stylesheet" href="style.css">
+<title>KL Digital | Gen Z Innovation Hub</title>
+<style>
+/* ===== Root & Global ===== */
+:root {
+  --primary: #0066ff;
+  --secondary: #00d4ff;
+  --accent: #ff6b35;
+  --gold: #ffd700;
+  --dark: #0a0e27;
+  --text: #ffffff;
+}
+
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
+
+body, html { 
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  overflow-x: hidden; 
+  background: var(--dark);
+  color: var(--text);
+  position: relative;
+}
+
+/* ===== Animated Background ===== */
+.bg-gradient {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
+}
+
+.bg-gradient::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
+  animation: bgMove 20s ease infinite;
+}
+
+@keyframes bgMove {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(-5%, -5%) rotate(120deg); }
+  66% { transform: translate(5%, 5%) rotate(240deg); }
+}
+
+/* ===== Floating Particles ===== */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  background: rgba(0, 212, 255, 0.6);
+  border-radius: 50%;
+  animation: float 15s infinite ease-in-out;
+}
+
+.particle:nth-child(1) { width: 4px; height: 4px; left: 10%; top: 20%; animation-delay: 0s; }
+.particle:nth-child(2) { width: 6px; height: 6px; left: 30%; top: 60%; animation-delay: 2s; background: rgba(255, 107, 53, 0.6); }
+.particle:nth-child(3) { width: 3px; height: 3px; left: 50%; top: 40%; animation-delay: 4s; }
+.particle:nth-child(4) { width: 5px; height: 5px; left: 70%; top: 70%; animation-delay: 1s; background: rgba(255, 215, 0, 0.6); }
+.particle:nth-child(5) { width: 4px; height: 4px; left: 80%; top: 30%; animation-delay: 3s; }
+.particle:nth-child(6) { width: 7px; height: 7px; left: 20%; top: 80%; animation-delay: 5s; background: rgba(0, 212, 255, 0.6); }
+.particle:nth-child(7) { width: 3px; height: 3px; left: 60%; top: 15%; animation-delay: 2.5s; }
+.particle:nth-child(8) { width: 5px; height: 5px; left: 90%; top: 50%; animation-delay: 4.5s; background: rgba(255, 107, 53, 0.6); }
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+  25% { transform: translate(30px, -50px) scale(1.2); opacity: 1; }
+  50% { transform: translate(-20px, -100px) scale(0.8); opacity: 0.4; }
+  75% { transform: translate(40px, -70px) scale(1.1); opacity: 0.8; }
+}
+
+/* ===== Header ===== */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  background: rgba(10, 14, 39, 0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.4s ease;
+}
+
+header.scrolled {
+  background: rgba(10, 14, 39, 0.95);
+  box-shadow: 0 10px 40px rgba(0, 102, 255, 0.2);
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+header img {
+  height: 60px;
+  filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+  transition: all 0.3s ease;
+}
+
+header img:hover {
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.8));
+}
+
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--secondary), var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 2px;
+}
+
+nav {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  position: relative;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+nav a::before {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--secondary), var(--accent));
+  transition: width 0.3s ease;
+}
+
+nav a:hover {
+  color: var(--secondary);
+  transform: translateY(-2px);
+}
+
+nav a:hover::before {
+  width: 100%;
+}
+
+.nav-foundation {
+  background: linear-gradient(135deg, var(--accent), var(--gold));
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+  transition: all 0.3s ease;
+}
+
+.nav-foundation:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.6);
+}
+
+.nav-foundation::before {
+  display: none;
+}
+
+/* ===== Hero Section ===== */
+.hero {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8rem 2rem 4rem;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 102, 255, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(100px);
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+}
+
+.hero h1 {
+  font-size: 4.5rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #ffffff 0%, var(--secondary) 50%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: slideInDown 1s ease;
+  text-shadow: 0 0 40px rgba(0, 212, 255, 0.5);
+}
+
+@keyframes slideInDown {
+  from { opacity: 0; transform: translateY(-50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-tagline {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 3rem;
+  letter-spacing: 8px;
+  font-weight: 300;
+  animation: fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.hero-tagline span {
+  display: inline-block;
+  margin: 0 0.5rem;
+  color: var(--secondary);
+  font-weight: 600;
+}
+
+.btn {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 1.2rem 3rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 1px;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.btn:hover::before {
+  width: 400px;
+  height: 400px;
+}
+
+.btn:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 40px rgba(0, 212, 255, 0.6);
+}
+
+.hero-tech-icons {
+  display: flex;
+  gap: 2rem;
+  margin-top: 4rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.tech-icon {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(0, 212, 255, 0.3);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  transition: all 0.3s ease;
+  animation: float 3s ease-in-out infinite;
+}
+
+.tech-icon:nth-child(2) { animation-delay: 0.5s; }
+.tech-icon:nth-child(3) { animation-delay: 1s; }
+.tech-icon:nth-child(4) { animation-delay: 1.5s; }
+
+.tech-icon:hover {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: var(--secondary);
+  transform: translateY(-10px) scale(1.1);
+  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+}
+
+/* ===== Sections ===== */
+section {
+  max-width: 1200px;
+  margin: auto;
+  padding: 6rem 2rem;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease;
+  position: relative;
+  z-index: 2;
+}
+
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+h2 {
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 3rem;
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  display: inline-block;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  border-radius: 2px;
+}
+
+/* ===== Projects ===== */
+.project-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.project-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.5s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.1) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+.project-card:hover {
+  transform: translateY(-15px) scale(1.03);
+  border-color: var(--secondary);
+  box-shadow: 0 20px 50px rgba(0, 212, 255, 0.3);
+}
+
+.project-icon {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  transition: all 0.4s ease;
+}
+
+.project-card:hover .project-icon {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.5);
+}
+
+.project-card h3 {
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.project-card p {
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* ===== Contact Section ===== */
+#contact {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 30px;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  padding: 4rem 2rem;
+}
+
+#contact p {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#contact a {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+#contact a:hover {
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+/* ===== Footer ===== */
+footer {
+  background: rgba(10, 14, 39, 0.8);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(0, 212, 255, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 4rem;
+  position: relative;
+  z-index: 2;
+}
+
+footer p {
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+
+/* ===== Scroll to Top Button ===== */
+.scroll-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.3s ease;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 102, 255, 0.4);
+}
+
+.scroll-top.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.scroll-top:hover {
+  transform: scale(1.1) translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 212, 255, 0.6);
+}
+
+/* ===== Mobile Menu ===== */
+.mobile-menu-btn {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.mobile-menu-btn span {
+  width: 25px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--secondary), var(--accent));
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  nav {
+    position: fixed;
+    top: 80px;
+    left: -100%;
+    width: 100%;
+    background: rgba(10, 14, 39, 0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1.5rem;
+    transition: left 0.4s ease;
+    border-top: 1px solid rgba(0, 212, 255, 0.2);
+  }
+
+  nav.active {
+    left: 0;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-tagline {
+    font-size: 1rem;
+    letter-spacing: 4px;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .project-container {
+    grid-template-columns: 1fr;
+  }
+
+  header img {
+    height: 45px;
+  }
+
+  header h1 {
+    font-size: 1.3rem;
+  }
+}
+</style>
 </head>
 <body>
 
-<canvas id="particle-canvas"></canvas>
+<div class="bg-gradient"></div>
+
+<div class="particles">
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+</div>
 
 <header>
-  <img src="images/logo.png" alt="KL Digital Logo">
-  <h1>KL Digital</h1>
-  <nav>
+  <div class="logo-section">
+    <img src="logo.svg" alt="KL Digital Logo">
+    <h1>KL DIGITAL</h1>
+  </div>
+  
+  <button class="mobile-menu-btn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <nav id="mainNav">
     <a href="#hero">Home</a>
     <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
-    <a href="https://kandlfoundation.com" target="_blank">K&L Foundation</a>
+    <a href="index.html" class="nav-foundation">K&L Foundation</a>
   </nav>
 </header>
 
 <section class="hero" id="hero">
-  <h1>Innovate • Gen Z • Empower</h1>
-  <a href="#projects" class="btn">Explore Projects</a>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <h1>KL DIGITAL</h1>
+    <p class="hero-tagline">INNOVATE <span>•</span> GEN Z <span>•</span> EMPOWER</p>
+    <a href="#projects" class="btn">Explore Projects</a>
+    
+    <div class="hero-tech-icons">
+      <div class="tech-icon">🤖</div>
+      <div class="tech-icon">💻</div>
+      <div class="tech-icon">🚀</div>
+      <div class="tech-icon">⚡</div>
+    </div>
+  </div>
 </section>
 
 <section id="projects">
   <h2>Our Projects</h2>
   <div class="project-container">
     <div class="project-card">
-      <img src="images/AI Workshops.svg" alt="AI Workshops">
+      <div class="project-icon">🤖</div>
       <h3>AI Workshops</h3>
-      <p>Veiwing artificial intelligence applications and projects.Full method on how you can add artificial intelligence to your business</p>
+      <p>Exploring artificial intelligence applications and projects. Full method on how you can add artificial intelligence to your business and unlock exponential growth.</p>
     </div>
     <div class="project-card">
-      <img src="images/Web Development.svg" alt="Web Development">
+      <div class="project-icon">💻</div>
       <h3>Web Development</h3>
-      <p>Creating functional, aesthetic websites.</p>
+      <p>Creating functional, aesthetic, and high-performance websites that drive results. Modern design meets cutting-edge technology.</p>
     </div>
     <div class="project-card">
-      <img src="images/Tech Support.svg" alt="Tech Support">
+      <div class="project-icon">🛠️</div>
       <h3>Tech Support</h3>
-      <p>Providing hands-on technical assistance and IT troubleshooting.</p>
+      <p>Providing hands-on technical assistance and IT troubleshooting. We've got your back with 24/7 expert support.</p>
     </div>
   </div>
 </section>
@@ -54,20 +676,72 @@
 </section>
 
 <footer>
-  <p>© 2025 K&L Foundation | KL Digital</p>
+  <p>© 2025 K&L Foundation | KL Digital - Gen Z Innovation Hub</p>
 </footer>
 
-<script src="main.js" defer></script>
+<button class="scroll-top" onclick="scrollToTop()">↑</button>
+
 <script>
-  // Scroll reveal sections
-  const sections = document.querySelectorAll('section');
-  window.addEventListener('scroll', () => {
-    sections.forEach(section => {
-      if(section.getBoundingClientRect().top < window.innerHeight - 100) {
-        section.classList.add('visible');
-      }
-    });
+// Mobile menu toggle
+function toggleMenu() {
+  document.getElementById('mainNav').classList.toggle('active');
+}
+
+// Close menu when clicking a link
+document.querySelectorAll('nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('mainNav').classList.remove('active');
   });
+});
+
+// Header scroll effect
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('header');
+  if (window.scrollY > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+// Scroll reveal sections
+const sections = document.querySelectorAll('section');
+const revealSection = () => {
+  sections.forEach(section => {
+    if (section.getBoundingClientRect().top < window.innerHeight - 100) {
+      section.classList.add('visible');
+    }
+  });
+};
+
+window.addEventListener('scroll', revealSection);
+window.addEventListener('load', revealSection);
+
+// Scroll to top button
+const scrollTopBtn = document.querySelector('.scroll-top');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 300) {
+    scrollTopBtn.classList.add('visible');
+  } else {
+    scrollTopBtn.classList.remove('visible');
+  }
+});
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
 </script>
+
 </body>
 </html>
